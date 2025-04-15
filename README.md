@@ -7,3 +7,17 @@ Uses next Spring Projects:
 
 Used libraries 
 - Lombok
+
+Future functionality
+- Interacting with excursions.
+  - See list of all available excursions
+    - Filter by amount of open places, country, price, tags
+  - See details of excursion
+- Booking excursion
+  - See list of all booked excursions
+  - Book excursion for several people
+  - Cancel booking
+- Admin functionality
+  - CRUD for excursion
+  - Statistics
+  - Send notifications
