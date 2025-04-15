@@ -1,4 +1,6 @@
-# FollowMe
+# 🌍 FollowMe
+
+## Technical stack
 
 System for booking excursions in FollowMe agency.
 
@@ -7,6 +9,8 @@ Uses next Spring Projects:
 
 Used libraries 
 - Lombok
+
+## Project functionality
 
 Future functionality
 - Interacting with excursions.
