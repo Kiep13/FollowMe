@@ -1,5 +1,10 @@
 # 🌍 FollowMe
 
+Run application via cmd 
+```bash
+mvn clean spring-boot:run
+```
+
 ## Technical stack
 
 System for booking excursions in FollowMe agency.
