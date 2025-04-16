@@ -48,37 +48,16 @@
             flex-direction: column;
             gap: 20px;
         }
-
-        .cards {
-            width: 100%;;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .card {
-            border: 1px solid black;
-            border-radius: 10px;
-            padding: 10px;
-            width: calc(50% - 10px);
-        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <a class="header__link" th:href="@{/excursions}">FollowMe</a>
-    </header>
-    <section class="content">
-        <img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/1_hallstatt_austria.jpg/1200px-1_hallstatt_austria.jpg"/>
-        <h1>Open excursions</h1>
-        <div class="cards">
-            <div class="card" th:each="excursion: ${excursions}">
-                <h2 th:text="${excursion.title}" />
-                <p th:text="${excursion.description}" />
-                <a th:href="@{/excursions/{id}(id=${excursion.id})}">see more</a>
-            </div>
-        </div>
-
-    </section>
+<header class="header">
+    <a class="header__link" th:href="@{/excursions}">FollowMe</a>
+</header>
+<section class="content">
+    <img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/1_hallstatt_austria.jpg/1200px-1_hallstatt_austria.jpg"/>
+    <h1 th:text="${excursion.title}">Open excursions</h1>
+    <p th:text="${excursion.description}"></p>
+</section>
 </body>
 </html>
