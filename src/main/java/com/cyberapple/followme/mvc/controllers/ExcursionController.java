@@ -24,10 +24,15 @@ public class ExcursionController {
     }
 
     @GetMapping("/excursions/{id}")
-    public String getDashboard(@PathVariable String id, Model model) {
+    public String getExcursionPage(@PathVariable String id, Model model) {
         var excursion = excursionService.getExcursionById(id);
 
         model.addAttribute("excursion", excursion);
         return "excursion";
+    }
+
+    @GetMapping("/excursions/new")
+    public String getExcursionAddForm() {
+        return "excursion-form";
     }
 }
