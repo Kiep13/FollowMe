@@ -3,6 +3,7 @@ package com.cyberapple.followme.api.controllers;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.services.ExcursionService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,5 +20,10 @@ public class ApiExcursionController {
     @GetMapping("api/excursions")
     public List<Excursion> getAllExcursions() {
         return excursionService.getAllExcursions();
+    }
+
+    @GetMapping("api/excursions/{id}")
+    public Excursion getExcursionById(@PathVariable String id) {
+        return excursionService.getExcursionById(id);
     }
 }

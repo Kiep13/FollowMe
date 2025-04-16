@@ -42,6 +42,7 @@ public class ExcursionService {
     }
 
     public Excursion getExcursionById(String id) {
+        // TODO: Add error handling here
         for (Excursion excursion : excursions) {
             if (excursion.getId().equals(id)) {
                 return excursion;
