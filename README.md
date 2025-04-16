@@ -17,6 +17,9 @@ Used libraries
 
 ## Project functionality
 
+Existing functionality
+- [Get list of all excursions in web](http://localhost:8080/excursions)
+
 Future functionality
 - Interacting with excursions.
   - See list of all available excursions

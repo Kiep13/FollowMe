@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <style>
+        body,
+        h1,
+        h2, p {
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            width: 100%;
+            background: white;
+            box-shadow: #a2b7ec 0 0 10px;
+            padding: 10px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header__link,
+        .header__link:hover,
+        .header__link:active,
+        .header__link:visited {
+            color: #5a2626;
+            font-weight: 300;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .cover {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cards {
+            width: 100%;;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            width: calc(50% - 10px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a class="header__link" th:href="@{/}">FollowMe</a>
+    </header>
+    <section class="content">
+        <img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/1_hallstatt_austria.jpg/1200px-1_hallstatt_austria.jpg"/>
+        <h1>Open excursions</h1>
+        <div class="cards">
+            <div class="card" th:each="excursion: ${excursions}">
+                <h2 th:text="${excursion.title}" />
+                <p th:text="${excursion.description}" />
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>
