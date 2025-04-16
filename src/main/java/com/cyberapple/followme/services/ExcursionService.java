@@ -36,4 +36,17 @@ public class ExcursionService {
 
         excursions.add(excursion3);
     }
+
+    public List<Excursion> getAllExcursions() {
+        return excursions;
+    }
+
+    public Excursion getExcursionById(String id) {
+        for (Excursion excursion : excursions) {
+            if (excursion.getId().equals(id)) {
+                return excursion;
+            }
+        }
+        return null;
+    }
 }
