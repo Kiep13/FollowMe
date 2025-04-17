@@ -48,6 +48,46 @@
             flex-direction: column;
             gap: 20px;
         }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form__label {
+            font-size: 22px;
+            display: flex
+        }
+
+        .form__actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .form__save {
+            background: #5a2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .form__input {
+            width: 50%;
+            padding: 5px 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 100;
+        }
+
+        .form__textarea {
+            min-height: 150px;
+            height: fit-content;
+        }
     </style>
 </head>
 <body>
@@ -57,24 +97,26 @@
 <section class="content">
     <img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/1_hallstatt_austria.jpg/1200px-1_hallstatt_austria.jpg"/>
 
-    <form method="post">
+    <form class="form" method="post">
+        <h1>Add new excursion</h1>
+
         <div>
-            <label for="title">Title</label>
-            <input id="title" type="text" name="title" required/>
+            <label class="form__label" for="title">Title</label>
+            <input class="form__input" id="title" type="text" name="title" required/>
         </div>
 
         <div>
-            <label for="description">Description</label>
-            <textarea id="description" name="description" required></textarea>
+            <label class="form__label" for="description">Description</label>
+            <textarea class="form__input form__textarea" id="description" name="description" required></textarea>
         </div>
 
         <div>
-            <label for="date">Date</label>
-            <input id="date" type="date" name="date" required/>
+            <label class="form__label" for="date">Date</label>
+            <input class="form__input" id="date" type="date" name="date" required/>
         </div>
 
-        <div>
-            <button>Save</button>
+        <div class="form__actions">
+            <button class="form__save" type="submit">Save</button>
         </div>
     </form>
 </section>

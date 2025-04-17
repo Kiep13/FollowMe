@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class ExcursionController {
@@ -31,8 +33,13 @@ public class ExcursionController {
         return "excursion";
     }
 
-    @GetMapping("/excursions/new")
+    @GetMapping("/admin/excursions/new")
     public String getExcursionAddForm() {
         return "excursion-form";
+    }
+
+    @PostMapping("/admin/excursions/new")
+    public RedirectView saveNewExcursion() {
+        return new RedirectView("excursions");
     }
 }
