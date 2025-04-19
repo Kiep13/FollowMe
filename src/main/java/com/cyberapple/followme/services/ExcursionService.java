@@ -1,6 +1,8 @@
 package com.cyberapple.followme.services;
 
 import com.cyberapple.followme.entities.Excursion;
+import jakarta.annotation.PostConstruct;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -8,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@NoArgsConstructor
 public class ExcursionService {
     List<Excursion> excursions = new ArrayList<>();
 
-    public ExcursionService() {
+    @PostConstruct
+    private void initializeList() {
         Excursion excursion1 = new Excursion();
         excursion1.setId("1");
         excursion1.setTitle("High Tatras Hike (Slovakia)");
