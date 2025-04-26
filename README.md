@@ -1,8 +1,8 @@
 # 🌍 FollowMe
 
-Run application via cmd 
+Run application in dev mode via cmd 
 ```bash
-mvn clean spring-boot:run
+mvn clean spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 ## Technical stack
