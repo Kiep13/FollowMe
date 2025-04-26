@@ -20,10 +20,12 @@ public class Excursion {
 
     @jakarta.persistence.Id
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.UUID)
     private String id;
 
     private String title;
+
+    private String imageUrl;
 
     private String description;
 

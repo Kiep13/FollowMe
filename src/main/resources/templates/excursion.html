@@ -55,7 +55,7 @@
     <a class="header__link" th:href="@{/excursions}">FollowMe</a>
 </header>
 <section class="content">
-    <img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/1_hallstatt_austria.jpg/1200px-1_hallstatt_austria.jpg"/>
+    <img class="cover" th:src="@{${excursion.imageUrl}}" />
     <h1 th:text="${excursion.title}">Open excursions</h1>
     <p th:text="${excursion.description}"></p>
 </section>
