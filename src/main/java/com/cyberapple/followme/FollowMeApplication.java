@@ -1,5 +1,7 @@
 package com.cyberapple.followme;
 
+import com.cyberapple.followme.entities.User;
+import com.cyberapple.followme.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +19,7 @@ public class FollowMeApplication {
 	}
 
 	@Bean
-	CommandLineRunner demo(ExcursionRepository excursionRepository) {
+	CommandLineRunner demo(ExcursionRepository excursionRepository, UserRepository userRepository) {
 		return (args) -> {
 			Excursion excursion1 = new Excursion();
 			excursion1.setTitle("High Tatras Hike (Slovakia)");
@@ -88,6 +90,14 @@ public class FollowMeApplication {
 			excursion10.setDescription("Explore the mystical Baradla Cave system, discovering stunning underground formations and fascinating local legends.");
 			excursion10.setDate(LocalDate.parse("2025-07-03"));
 			excursionRepository.save(excursion10);
+
+			User user = new User();
+			user.setFirstName("John");
+			user.setLastName("Doe");
+			user.setEmail("a1@bk.ru");
+			user.setPassword("1234");
+
+			userRepository.save(user);
 		};
 	}
 }

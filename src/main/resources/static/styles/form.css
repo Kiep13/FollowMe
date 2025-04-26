@@ -38,3 +38,8 @@
     font-size: 18px;
     font-weight: 100;
 }
+
+.form__error-message {
+    color: red;
+    font-size: 14px;
+}

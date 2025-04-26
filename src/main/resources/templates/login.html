@@ -45,17 +45,21 @@
 </head>
 <body>
     <section class="content">
-        <form class="form">
+        <form class="form" method="post" action="/login">
             <h1 class="title">Welcome back</h1>
 
             <div>
                 <label class="form__label" for="email">Email</label>
-                <input class="form__input" id="email" type="text" name="email" required/>
+                <input class="form__input" id="email" type="text" name="email" th:value="${email}" required/>
             </div>
 
             <div>
                 <label class="form__label" for="password">Password</label>
-                <input class="form__input" id="password" type="text" name="password" required/>
+                <input class="form__input" id="password" type="text" name="password" th:value="${password}" required/>
+            </div>
+
+            <div>
+                <span class="form__error-message" th:text="${errorMessage}"></span>
             </div>
 
             <div class="form__actions">
