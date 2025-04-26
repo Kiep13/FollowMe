@@ -11,14 +11,17 @@ System for booking excursions in FollowMe agency.
 
 Uses next Spring Projects: 
 - Boot
+- Data
 
 Used libraries 
 - Lombok
+- H2 (for internal database)
 
 ## Project functionality
 
 Existing functionality
 - [Get list of all excursions in web](http://localhost:8080/excursions)
+- Get excursion by id (better to navigate from previous one)
 
 Future functionality
 - Interacting with excursions.

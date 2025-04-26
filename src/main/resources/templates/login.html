@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Excursion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/form.css}"/>
+
+    <style>
+        body,
+        h1,
+        h2, p {
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 100;
+        }
+
+        .form__input {
+            width: 100%;
+        }
+
+        .form__actions {
+            justify-content: center;
+        }
+
+        .form__save {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <section class="content">
+        <form class="form">
+            <h1 class="title">Welcome back</h1>
+
+            <div>
+                <label class="form__label" for="email">Email</label>
+                <input class="form__input" id="email" type="text" name="email" required/>
+            </div>
+
+            <div>
+                <label class="form__label" for="password">Password</label>
+                <input class="form__input" id="password" type="text" name="password" required/>
+            </div>
+
+            <div class="form__actions">
+                <button class="form__save" type="submit">Login</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

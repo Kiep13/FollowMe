@@ -59,8 +59,19 @@
         .card {
             border: 1px solid black;
             border-radius: 10px;
-            padding: 10px;
             width: calc(50% - 10px);
+            overflow: hidden;
+        }
+
+        .card__image{
+            max-width: 100%;
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .card__content {
+            padding: 10px;
         }
     </style>
 </head>
@@ -73,12 +84,14 @@
         <h1>Open excursions</h1>
         <div class="cards">
             <div class="card" th:each="excursion: ${excursions}">
-                <h2 th:text="${excursion.title}" />
-                <p th:text="${excursion.description}" />
-                <a th:href="@{/excursions/{id}(id=${excursion.id})}">see more</a>
+                <img class="card__image" th:src="@{${excursion.imageUrl}}" />
+                <div class="card__content">
+                    <h2 th:text="${excursion.title}" />
+                    <p th:text="${excursion.description}" />
+                    <a th:href="@{/excursions/{id}(id=${excursion.id})}">see more</a>
+                </div>
             </div>
         </div>
-
     </section>
 </body>
 </html>
