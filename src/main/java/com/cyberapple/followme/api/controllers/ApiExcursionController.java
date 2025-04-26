@@ -1,12 +1,11 @@
 package com.cyberapple.followme.api.controllers;
 
-import com.cyberapple.followme.entities.Excursion;
-import com.cyberapple.followme.services.ExcursionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.cyberapple.followme.entities.Excursion;
+import com.cyberapple.followme.services.ExcursionService;
 
 @RestController
 public class ApiExcursionController {
@@ -18,7 +17,7 @@ public class ApiExcursionController {
     }
 
     @GetMapping("api/excursions")
-    public List<Excursion> getAllExcursions() {
+    public Iterable<Excursion> getAllExcursions() {
         return excursionService.getAllExcursions();
     }
 
