@@ -2,9 +2,11 @@ package com.cyberapple.followme;
 
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.repositories.UserRepository;
+import com.cyberapple.followme.services.ExcursionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 
@@ -15,7 +17,13 @@ import com.cyberapple.followme.repositories.ExcursionRepository;
 public class FollowMeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FollowMeApplication.class, args);
+		ApplicationContext applicationContext = SpringApplication.run(FollowMeApplication.class, args);
+		ExcursionService excursionService = applicationContext.getBean("excursionService",ExcursionService.class);
+
+		Iterable<Excursion> excursions = excursionService.getAllExcursions();
+		for (Excursion excursion : excursions) {
+			System.out.println(excursion.getTitle());
+		}
 	}
 
 	@Bean
