@@ -31,6 +31,10 @@ public class Excursion {
 
     private LocalDate date;
 
+    private Integer price;
+
+    private Integer amountOfPlaces;
+
     @Override
     public String toString() {
         return "Excursion{" +
