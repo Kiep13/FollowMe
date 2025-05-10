@@ -1,11 +1,10 @@
 package com.cyberapple.followme.api.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.entities.Excursion;
+import com.cyberapple.followme.entities.Participant;
 import com.cyberapple.followme.services.ExcursionService;
 
 @RestController
@@ -22,5 +21,10 @@ public class ApiExcursionController {
     @GetMapping("api/excursions/{id}")
     public Excursion getExcursionById(@PathVariable String id) {
         return excursionService.getExcursionById(id);
+    }
+
+    @PostMapping("api/excursions/{id}/join")
+    public void registerForExcursion(@PathVariable String id, @RequestBody Participant newParticipant) {
+        excursionService.registerForExcursion(id, newParticipant);
     }
 }
