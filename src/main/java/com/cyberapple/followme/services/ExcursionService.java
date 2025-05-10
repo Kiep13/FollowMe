@@ -7,6 +7,8 @@ import com.cyberapple.followme.repositories.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ExcursionService {
@@ -23,8 +25,9 @@ public class ExcursionService {
         return this.excursionRepository.findById(id).orElse(null);
     }
 
-    public void registerForExcursion(String id, Participant newParticipant) {
-        newParticipant.setExcursion(this.getExcursionById(id));
-        this.participantRepository.save(newParticipant);
+    public void registerForExcursion(String id, List<Participant> newParticipants) {
+        newParticipants.forEach(participant -> participant.setExcursion(this.getExcursionById(id)));
+
+        this.participantRepository.saveAll(newParticipants);
     }
 }

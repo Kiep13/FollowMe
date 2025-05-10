@@ -7,6 +7,8 @@ import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participant;
 import com.cyberapple.followme.services.ExcursionService;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class ApiExcursionController {
@@ -24,7 +26,7 @@ public class ApiExcursionController {
     }
 
     @PostMapping("api/excursions/{id}/join")
-    public void registerForExcursion(@PathVariable String id, @RequestBody Participant newParticipant) {
-        excursionService.registerForExcursion(id, newParticipant);
+    public void registerForExcursion(@PathVariable String id, @RequestBody List<Participant> newParticipants) {
+        excursionService.registerForExcursion(id, newParticipants);
     }
 }
