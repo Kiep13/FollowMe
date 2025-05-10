@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.entities.Excursion;
-import com.cyberapple.followme.entities.Participant;
+import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.services.ExcursionService;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -26,7 +24,7 @@ public class ApiExcursionController {
     }
 
     @PostMapping("api/excursions/{id}/join")
-    public void registerForExcursion(@PathVariable String id, @RequestBody List<Participant> newParticipants) {
-        excursionService.registerForExcursion(id, newParticipants);
+    public void registerForExcursion(@PathVariable String id, @RequestBody Participation participation) {
+        excursionService.registerForExcursion(id, participation);
     }
 }

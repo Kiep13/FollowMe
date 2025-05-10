@@ -1,20 +1,18 @@
 package com.cyberapple.followme.services;
 
 import com.cyberapple.followme.entities.Excursion;
-import com.cyberapple.followme.entities.Participant;
+import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.repositories.ExcursionRepository;
-import com.cyberapple.followme.repositories.ParticipantRepository;
+import com.cyberapple.followme.repositories.ParticipationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class ExcursionService {
     private ExcursionRepository excursionRepository;
 
-    private ParticipantRepository participantRepository;
+    private ParticipationRepository participationRepository;
 
     public Iterable<Excursion> getAllExcursions() {
         return this.excursionRepository.findAll();
@@ -25,9 +23,14 @@ public class ExcursionService {
         return this.excursionRepository.findById(id).orElse(null);
     }
 
-    public void registerForExcursion(String id, List<Participant> newParticipants) {
-        newParticipants.forEach(participant -> participant.setExcursion(this.getExcursionById(id)));
+    public void registerForExcursion(String id, Participation participation) {
+        participation.setExcursion(this.excursionRepository.findById(id).orElse(null));
 
-        this.participantRepository.saveAll(newParticipants);
+        // TODO: is it really good practise?
+        participation.getParticipants().forEach(participant -> {
+            participant.setParticipation(participation);
+        });
+
+        participationRepository.save(participation);
     }
 }

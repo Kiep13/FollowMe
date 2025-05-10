@@ -1,6 +1,11 @@
 package com.cyberapple.followme.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,19 +37,11 @@ public class Participant {
 
     @ManyToOne
     @JoinColumn(
-            name = "excursion_id",
+            name = "participation_id",
             referencedColumnName = "id",
             nullable = false
     )
-    private Excursion excursion;
-
-//    @ManyToOne
-//    @JoinColumn(
-//            name = "user_id",
-//            referencedColumnName = "id",
-//            nullable = false
-//    )
-//    private User user;
+    private Participation participation;
 
     @Override
     public String toString() {
@@ -53,9 +50,6 @@ public class Participant {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", citizenship='" + citizenship + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
-                ", excursion=" + excursion +
                 '}';
     }
 }
