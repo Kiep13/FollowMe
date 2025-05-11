@@ -19,9 +19,9 @@ public class ExcursionService {
         return this.excursionRepository.findAllExcursionsWithAvailablePlaces();
     }
 
-    public Excursion getExcursionById(String id) {
+    public ExcursionDto getExcursionById(String id) {
         // TODO: Add error handling here
-        return this.excursionRepository.findById(id).orElse(null);
+        return this.excursionRepository.findExcursionWithAvailablePlacesById(id).orElse(null);
     }
 
     public void registerForExcursion(String id, Participation participation) {

@@ -20,7 +20,7 @@ public class ApiExcursionController {
     }
 
     @GetMapping("api/excursions/{id}")
-    public Excursion getExcursionById(@PathVariable String id) {
+    public ExcursionDto getExcursionById(@PathVariable String id) {
         return excursionService.getExcursionById(id);
     }
 
