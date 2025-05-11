@@ -3,6 +3,7 @@ package com.cyberapple.followme.api.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.services.ExcursionService;
@@ -14,7 +15,7 @@ public class ApiExcursionController {
     private final ExcursionService excursionService;
 
     @GetMapping("api/excursions")
-    public Iterable<Excursion> getAllExcursions() {
+    public Iterable<ExcursionDto> getAllExcursions() {
         return excursionService.getAllExcursions();
     }
 

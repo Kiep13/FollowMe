@@ -1,5 +1,6 @@
 package com.cyberapple.followme;
 
+import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.ExcursionService;
@@ -20,9 +21,9 @@ public class FollowMeApplication {
 		ApplicationContext applicationContext = SpringApplication.run(FollowMeApplication.class, args);
 		ExcursionService excursionService = applicationContext.getBean("excursionService",ExcursionService.class);
 
-		Iterable<Excursion> excursions = excursionService.getAllExcursions();
-		for (Excursion excursion : excursions) {
-			System.out.println(excursion.getTitle());
+		Iterable<ExcursionDto> excursions = excursionService.getAllExcursions();
+		for (ExcursionDto excursion : excursions) {
+			System.out.println(excursion.getId() + ": " + excursion.getTitle());
 		}
 	}
 
@@ -43,8 +44,8 @@ public class FollowMeApplication {
 			excursion2.setImageUrl("https://www.akvillas.com/-/media/akvillas/experiences/croatia/explore-the-stunning-plitvice-lakes/main_plitvice-lakes-national-park--4.jpg?la=en&hash=F83198B9EC159C2B34122648744CFA698321D201");
 			excursion2.setDescription("Discover the beauty of Plitvice Lakes, with its cascading waterfalls and vibrant turquoise lakes, on a guided tour.");
 			excursion2.setDate(LocalDate.parse("2025-06-10"));
-			excursion1.setPrice(60);
-			excursion1.setAmountOfPlaces(15);
+			excursion2.setPrice(60);
+			excursion2.setAmountOfPlaces(15);
 			excursionRepository.save(excursion2);
 
 			Excursion excursion3 = new Excursion();

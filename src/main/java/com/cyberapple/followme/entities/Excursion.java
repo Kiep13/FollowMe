@@ -1,6 +1,7 @@
 package com.cyberapple.followme.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -32,6 +33,9 @@ public class Excursion {
     private Integer price;
 
     private Integer amountOfPlaces;
+
+    @OneToMany(mappedBy = "excursion", cascade = CascadeType.ALL)
+    private List<Participation> participations;
 
     @Override
     public String toString() {

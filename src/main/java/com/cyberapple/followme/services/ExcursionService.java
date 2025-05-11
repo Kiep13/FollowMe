@@ -1,5 +1,6 @@
 package com.cyberapple.followme.services;
 
+import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.repositories.ExcursionRepository;
@@ -14,8 +15,8 @@ public class ExcursionService {
 
     private ParticipationRepository participationRepository;
 
-    public Iterable<Excursion> getAllExcursions() {
-        return this.excursionRepository.findAll();
+    public Iterable<ExcursionDto> getAllExcursions() {
+        return this.excursionRepository.findAllExcursionsWithAvailablePlaces();
     }
 
     public Excursion getExcursionById(String id) {
