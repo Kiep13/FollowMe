@@ -1,12 +1,14 @@
 package com.cyberapple.followme.dtos;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ExcursionDto {
     private String id;
 

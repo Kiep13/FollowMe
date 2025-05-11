@@ -1,5 +1,7 @@
 package com.cyberapple.followme.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +26,11 @@ public class Participation {
             referencedColumnName = "id",
             nullable = false
     )
+    @JsonBackReference
     private Excursion excursion;
 
     @OneToMany(mappedBy = "participation", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Participant> participants;
 
 //    @ManyToOne

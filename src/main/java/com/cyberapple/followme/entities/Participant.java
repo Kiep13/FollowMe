@@ -1,5 +1,6 @@
 package com.cyberapple.followme.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ public class Participant {
             referencedColumnName = "id",
             nullable = false
     )
+    @JsonBackReference
     private Participation participation;
 
     @Override
