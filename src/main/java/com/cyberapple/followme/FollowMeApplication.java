@@ -1,5 +1,6 @@
 package com.cyberapple.followme;
 
+import com.cyberapple.followme.configuration.WebConfig;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.repositories.UserRepository;
@@ -13,18 +14,22 @@ import java.time.LocalDate;
 
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.repositories.ExcursionRepository;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
+@Import({WebConfig.class})
 public class FollowMeApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = SpringApplication.run(FollowMeApplication.class, args);
 		ExcursionService excursionService = applicationContext.getBean("excursionService",ExcursionService.class);
 
-		Iterable<ExcursionDto> excursions = excursionService.getAllExcursions();
-		for (ExcursionDto excursion : excursions) {
-			System.out.println(excursion.getId() + ": " + excursion.getTitle());
-		}
+//		Iterable<ExcursionDto> excursions = excursionService.getAllExcursions();
+//		for (ExcursionDto excursion : excursions) {
+//			System.out.println(excursion.getId() + ": " + excursion.getTitle());
+//		}
 	}
 
 	@Bean
