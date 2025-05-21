@@ -3,7 +3,6 @@ package com.cyberapple.followme;
 import com.cyberapple.followme.configuration.WebConfig;
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.repositories.UserRepository;
-import com.cyberapple.followme.services.ExcursionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,9 +14,12 @@ import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
+@EnableTransactionManagement
 @Import({WebConfig.class})
 public class FollowMeApplication {
 
@@ -142,5 +144,10 @@ public class FollowMeApplication {
 
 			userRepository.save(user);
 		};
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new org.springframework.orm.jpa.JpaTransactionManager();
 	}
 }

@@ -7,6 +7,7 @@ import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class ExcursionService {
         return this.excursionRepository.findExcursionWithAvailablePlacesById(id).orElse(null);
     }
 
+    @Transactional
     public void registerForExcursion(String id, Participation participation) {
         participation.setExcursion(this.excursionRepository.findById(id).orElse(null));
 
