@@ -36,3 +36,10 @@ Future functionality
   - CRUD for excursion
   - Statistics
   - Send notifications
+
+## Tests
+
+To run tests, use the following command:
+```bash
+mvn test
+```
