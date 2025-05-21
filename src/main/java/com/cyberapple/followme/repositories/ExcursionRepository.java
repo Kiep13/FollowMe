@@ -32,4 +32,7 @@ public interface ExcursionRepository extends CrudRepository<Excursion, String> {
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
     """)
     Optional<ExcursionDto> findExcursionWithAvailablePlacesById(String id);
+
+    @Query("SELECT DISTINCT e.country FROM Excursion e")
+    List<String> getCountryList();
 }

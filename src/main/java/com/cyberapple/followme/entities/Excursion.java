@@ -34,6 +34,8 @@ public class Excursion {
 
     private Integer amountOfPlaces;
 
+    private String country;
+
     @OneToMany(mappedBy = "excursion", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Participation> participations;
