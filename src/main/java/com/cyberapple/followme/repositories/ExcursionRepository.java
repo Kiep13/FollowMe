@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
+import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.Excursion;
 
@@ -35,4 +36,7 @@ public interface ExcursionRepository extends CrudRepository<Excursion, String> {
 
     @Query("SELECT DISTINCT e.country FROM Excursion e")
     List<String> getCountryList();
+
+    @Query("SELECT new com.cyberapple.followme.dtos.PriceRange(MIN(e.price), MAX(e.price)) FROM Excursion e")
+    PriceRange getPriceRange();
 }

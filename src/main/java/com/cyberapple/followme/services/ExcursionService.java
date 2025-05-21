@@ -1,7 +1,7 @@
 package com.cyberapple.followme.services;
 
 import com.cyberapple.followme.dtos.ExcursionDto;
-import com.cyberapple.followme.entities.Excursion;
+import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
@@ -33,5 +33,9 @@ public class ExcursionService {
         });
 
         participationRepository.save(participation);
+    }
+
+    public PriceRange getPriceRange() {
+        return this.excursionRepository.getPriceRange();
     }
 }
