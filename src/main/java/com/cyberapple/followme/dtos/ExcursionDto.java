@@ -26,7 +26,9 @@ public class ExcursionDto {
 
     private Integer availablePlaces;
 
-    public ExcursionDto(String id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants) {
+    private String country;
+
+    public ExcursionDto(String id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants, String country) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -34,6 +36,7 @@ public class ExcursionDto {
         this.date = date;
         this.price = price;
         this.amountOfPlaces = amountOfPlaces;
+        this.country = country;
 
         Integer amountOfParticipantsInt = amountOfParticipants != null ? amountOfParticipants.intValue() : 0;
         this.availablePlaces = amountOfPlaces - amountOfParticipantsInt;

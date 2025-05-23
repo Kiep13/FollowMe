@@ -13,7 +13,7 @@ public interface ExcursionRepository extends CrudRepository<Excursion, String> {
 
     @Query("""
         SELECT new com.cyberapple.followme.dtos.ExcursionDto(
-            e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id)
+            e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id), e.country
         )
         FROM Excursion e
         LEFT JOIN e.participations p
@@ -24,7 +24,7 @@ public interface ExcursionRepository extends CrudRepository<Excursion, String> {
 
     @Query("""
         SELECT new com.cyberapple.followme.dtos.ExcursionDto(
-            e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id)
+            e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id), e.country
         )
         FROM Excursion e
         LEFT JOIN e.participations p
