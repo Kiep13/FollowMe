@@ -36,8 +36,8 @@ public class SecurityConfig {
     @Bean SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/**", "/login").permitAll() // Доступ без аутентификации
-                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+                .requestMatchers("/api/**", "/login").permitAll() 
+                .anyRequest().authenticated() 
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
