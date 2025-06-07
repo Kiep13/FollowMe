@@ -34,19 +34,19 @@ INSERT INTO excursion (title, image_url, description, date, price, amount_of_pla
 
 -- Table creation for Participation
 CREATE TABLE IF NOT EXISTS participation (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     excursion_id SERIAL NOT NULL,
     FOREIGN KEY (excursion_id) REFERENCES excursion (id)
 );
 
 -- Table creation for Participant
 CREATE TABLE IF NOT EXISTS participant (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     date_of_birth DATE NOT NULL,
     citizenship VARCHAR(50) NOT NULL,
     passport_number VARCHAR(50) NOT NULL,
-    participation_id SERIAL NOT NULL,
+    participation_id UUID NOT NULL,
     FOREIGN KEY (participation_id) REFERENCES participation (id)
 );
