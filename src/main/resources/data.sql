@@ -3,11 +3,13 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'USER',
     password VARCHAR(255) NOT NULL
 );
 
+-- Hashed password actual value 1234 with bcrypt cosr factor 10
 INSERT INTO users (first_name, last_name, email, password) VALUES
-('John', 'Doe', 'a1@bk.ru', '1234');
+('John', 'Doe', 'a1@bk.ru', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36');
 
 CREATE TABLE IF NOT EXISTS excursion (
     id SERIAL PRIMARY KEY,
