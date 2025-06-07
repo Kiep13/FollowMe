@@ -22,6 +22,7 @@ Used libraries
 Existing functionality
 - [Get list of all excursions in web](http://localhost:8080/excursions)
 - Get excursion by id (better to navigate from previous one)
+- Book to excursion (development in progress)
 
 Future functionality
 - Interacting with excursions.
