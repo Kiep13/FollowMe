@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Hashed password actual value 1234 with bcrypt cosr factor 10
-INSERT INTO users (first_name, last_name, email, password) VALUES
-('John', 'Doe', 'a1@bk.ru', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36');
+INSERT INTO users (id, first_name, last_name, email, password) VALUES
+('8db44b94-b254-42bb-9867-3756be46c450', 'John', 'Doe', 'a1@bk.ru', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36');
 
 CREATE TABLE IF NOT EXISTS excursion (
     id SERIAL PRIMARY KEY,
@@ -38,7 +38,7 @@ INSERT INTO excursion (title, image_url, description, date, price, amount_of_pla
 CREATE TABLE IF NOT EXISTS participation (
     id UUID PRIMARY KEY,
     excursion_id SERIAL NOT NULL,
-    user_id SERIAL NOT NULL,
+    user_id UUID NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (excursion_id) REFERENCES excursion (id),
     FOREIGN KEY (user_id) REFERENCES users (id)

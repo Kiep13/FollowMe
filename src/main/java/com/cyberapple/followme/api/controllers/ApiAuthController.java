@@ -2,6 +2,7 @@ package com.cyberapple.followme.api.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cyberapple.followme.repositories.UserRepository;
@@ -11,6 +12,7 @@ import com.cyberapple.followme.exceptions.InvalidCredentialsException;
 import com.cyberapple.followme.records.AuthResponse;
 import com.cyberapple.followme.records.LoginRequest;
 import com.cyberapple.followme.records.UserData;
+import com.cyberapple.followme.records.UserInput;
 
 @RestController
 @RequestMapping("api/auth")
@@ -35,5 +37,23 @@ public class ApiAuthController {
         String token = jwtService.generateToken(userData);
 
         return new AuthResponse(user, token);
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody UserInput userInput) {
+        if (userRepository.existsByEmail(userInput.email())) {
+            throw new IllegalArgumentException("User with this email already exists");
+        }
+
+        User user = new User(userInput);
+        user.setPassword(passwordEncoder.encode(userInput.password()));
+
+        userRepository.save(user);
+    }
+
+    @GetMapping("users")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

@@ -1,5 +1,7 @@
 package com.cyberapple.followme.entities;
 
+import com.cyberapple.followme.records.UserInput;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +27,11 @@ public class User {
 
     private String password;
 
-    private String role;
+    private String role = "USER";
+
+    public User(UserInput userInput) {
+        this.firstName = userInput.firstName();
+        this.lastName = userInput.lastName();
+        this.email = userInput.email();
+    }
 }

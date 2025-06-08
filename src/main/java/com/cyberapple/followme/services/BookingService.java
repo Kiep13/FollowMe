@@ -31,6 +31,7 @@ public class BookingService {
         Participation participation = new Participation();
         participation.setExcursion(this.excursionRepository.findById(excursionId).orElse(null));
 
+        // TODO: Should it be on AOP?
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalStateException("User is not authenticated");
@@ -53,6 +54,8 @@ public class BookingService {
     }
 
     public Iterable<Participation> getBookedExcursions() {
+
+        // TODO: Should it be on AOP?
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalStateException("User is not authenticated");
