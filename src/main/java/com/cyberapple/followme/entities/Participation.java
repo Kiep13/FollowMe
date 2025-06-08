@@ -42,6 +42,5 @@ public class Participation {
    )
    private User user;
 
-   // TODO: Fix emptiness
    private LocalDate createdAt;
 }

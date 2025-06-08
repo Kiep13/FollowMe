@@ -1,5 +1,7 @@
 package com.cyberapple.followme.entities;
 
+import com.cyberapple.followme.records.ParticipantInput;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -44,6 +46,14 @@ public class Participant {
     )
     @JsonBackReference
     private Participation participation;
+
+    public Participant(ParticipantInput participantApiInput) {
+        this.firstName = participantApiInput.firstName();
+        this.lastName = participantApiInput.lastName();
+        this.dateOfBirth = participantApiInput.dateOfBirth();
+        this.citizenship = participantApiInput.citizenship();
+        this.passportNumber = participantApiInput.passportNumber();
+    }
 
     @Override
     public String toString() {

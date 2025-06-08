@@ -1,12 +1,17 @@
 package com.cyberapple.followme.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cyberapple.followme.entities.Participant;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.entities.User;
+import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
 import com.cyberapple.followme.repositories.UserRepository;
@@ -21,8 +26,10 @@ public class BookingService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void registerForExcursion(String id, Participation participation) {
-        participation.setExcursion(this.excursionRepository.findById(id).orElse(null));
+    public void registerForExcursion(String excursionId, BookingInput bookingInput) {
+
+        Participation participation = new Participation();
+        participation.setExcursion(this.excursionRepository.findById(excursionId).orElse(null));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -32,11 +39,15 @@ public class BookingService {
                 .orElseThrow(() -> new IllegalStateException("User not found"));
         
         participation.setUser(user);
+        participation.setParticipants(new ArrayList<Participant>());
 
-        // TODO: is it really good practise?
-        participation.getParticipants().forEach(participant -> {
+        bookingInput.participants().forEach(participantInput -> {
+            Participant participant = new Participant(participantInput);
             participant.setParticipation(participation);
+            participation.getParticipants().add(participant);
         });
+
+        participation.setCreatedAt(LocalDate.now());
 
         participationRepository.save(participation);
     }

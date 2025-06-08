@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cyberapple.followme.entities.Participation;
+import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.services.BookingService;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +29,7 @@ public class ApiBookingController {
 
     @PostMapping("/{id}/add")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public void registerForExcursion(@PathVariable String id, @RequestBody Participation participation) {
-        bookingService.registerForExcursion(id, participation);
+    public void registerForExcursion(@PathVariable String id, @RequestBody BookingInput bookingInput) {
+        bookingService.registerForExcursion(id, bookingInput);
     }
 }
