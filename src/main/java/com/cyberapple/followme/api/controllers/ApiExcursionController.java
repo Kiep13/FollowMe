@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.dtos.PriceRange;
+import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.services.ExcursionService;
 
@@ -23,6 +24,11 @@ public class ApiExcursionController {
     @GetMapping("/price-range")
     public PriceRange getPriceRange() {
         return excursionService.getPriceRange();
+    }
+
+    @PostMapping("/add")
+    public void createExcursion(@RequestBody ExcursionInput excursionInput) {
+        excursionService.createExcursion(excursionInput);
     }
 
     @GetMapping("/{id}")

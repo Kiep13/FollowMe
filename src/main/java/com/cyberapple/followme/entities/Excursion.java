@@ -3,6 +3,7 @@ package com.cyberapple.followme.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.cyberapple.followme.records.ExcursionInput;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -40,6 +41,16 @@ public class Excursion {
     @OneToMany(mappedBy = "excursion", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Participation> participations;
+
+    public Excursion(ExcursionInput excursionInput) {
+        this.title = excursionInput.title();
+        this.imageUrl = excursionInput.imageUrl();
+        this.description = excursionInput.description();
+        this.date = excursionInput.date();
+        this.price = excursionInput.price();
+        this.amountOfPlaces = excursionInput.amountOfPlaces();
+        this.country = excursionInput.country();
+    }
 
     @Override
     public String toString() {
