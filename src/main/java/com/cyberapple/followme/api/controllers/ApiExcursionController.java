@@ -2,12 +2,10 @@ package com.cyberapple.followme.api.controllers;
 
 import lombok.AllArgsConstructor;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.dtos.ExcursionDto;
-import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.services.ExcursionService;
 
 @RestController
@@ -30,11 +28,5 @@ public class ApiExcursionController {
     @GetMapping("/{id}")
     public ExcursionDto getExcursionById(@PathVariable String id) {
         return excursionService.getExcursionById(id);
-    }
-
-    @PostMapping("/{id}/join")
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public void registerForExcursion(@PathVariable String id, @RequestBody Participation participation) {
-        excursionService.registerForExcursion(id, participation);
     }
 }

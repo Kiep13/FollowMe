@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,11 +34,14 @@ public class Participation {
     @JsonManagedReference
     private List<Participant> participants;
 
-//    @ManyToOne
-//    @JoinColumn(
-//            name = "user_id",
-//            referencedColumnName = "id",
-//            nullable = false
-//    )
-//    private User user;
+   @ManyToOne
+   @JoinColumn(
+           name = "user_id",
+           referencedColumnName = "id",
+           nullable = false
+   )
+   private User user;
+
+   // TODO: Fix emptiness
+   private LocalDate createdAt;
 }

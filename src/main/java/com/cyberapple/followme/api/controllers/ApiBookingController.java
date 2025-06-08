@@ -1,0 +1,34 @@
+package com.cyberapple.followme.api.controllers;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cyberapple.followme.entities.Participation;
+import com.cyberapple.followme.services.BookingService;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@RequestMapping("api/bookings")
+@AllArgsConstructor
+public class ApiBookingController {
+
+    private final BookingService bookingService;
+
+    @GetMapping("/my")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public Iterable<Participation> getBookedExcursions() {
+        return bookingService.getBookedExcursions();
+    }
+
+    @PostMapping("/{id}/add")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public void registerForExcursion(@PathVariable String id, @RequestBody Participation participation) {
+        bookingService.registerForExcursion(id, participation);
+    }
+}
