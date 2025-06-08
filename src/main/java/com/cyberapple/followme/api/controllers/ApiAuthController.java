@@ -52,7 +52,7 @@ public class ApiAuthController {
     }
 
     @GetMapping("users")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }

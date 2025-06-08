@@ -22,13 +22,13 @@ public class ApiBookingController {
     private final BookingService bookingService;
 
     @GetMapping("/my")
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Iterable<Participation> getBookedExcursions() {
         return bookingService.getBookedExcursions();
     }
 
     @PostMapping("/{id}/add")
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void registerForExcursion(@PathVariable String id, @RequestBody BookingInput bookingInput) {
         bookingService.registerForExcursion(id, bookingInput);
     }

@@ -28,7 +28,7 @@ public class ApiExcursionController {
     }
 
     @PostMapping("/add")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN')")
     public void createExcursion(@RequestBody ExcursionInput excursionInput) {
         excursionService.createExcursion(excursionInput);
     }
