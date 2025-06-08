@@ -2,7 +2,8 @@ package com.cyberapple.followme.entities;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ public class Excursion {
     private String country;
 
     @OneToMany(mappedBy = "excursion", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private List<Participation> participations;
 
     @Override

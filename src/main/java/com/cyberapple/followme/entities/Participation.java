@@ -27,7 +27,6 @@ public class Participation {
             referencedColumnName = "id",
             nullable = false
     )
-    @JsonBackReference
     private Excursion excursion;
 
     @OneToMany(mappedBy = "participation", cascade = CascadeType.ALL)
@@ -40,6 +39,7 @@ public class Participation {
            referencedColumnName = "id",
            nullable = false
    )
+   @JsonBackReference
    private User user;
 
    private LocalDate createdAt;
