@@ -1,6 +1,8 @@
 package com.cyberapple.followme.api.controllers;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.dtos.PriceRange;
@@ -31,6 +33,7 @@ public class ApiExcursionController {
     }
 
     @PostMapping("/{id}/join")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public void registerForExcursion(@PathVariable String id, @RequestBody Participation participation) {
         excursionService.registerForExcursion(id, participation);
     }
