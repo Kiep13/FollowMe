@@ -8,8 +8,9 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Hashed password actual value 1234 with bcrypt cosr factor 10
-INSERT INTO users (id, first_name, last_name, email, password) VALUES
-('8db44b94-b254-42bb-9867-3756be46c450', 'John', 'Doe', 'a1@bk.ru', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36');
+INSERT INTO users (id, first_name, last_name, email, password, role) VALUES
+('8db44b94-b254-42bb-9867-3756be46c450', 'John', 'Doe', 'admin@gmail.com', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36', 'ADMIN'),
+('c7b3f611-4ff2-4456-b545-4834e1accda6', 'Georgia', 'Blackwell', 'user@gmail.com', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36', 'USER');
 
 CREATE TABLE IF NOT EXISTS excursion (
     id SERIAL PRIMARY KEY,
