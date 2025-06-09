@@ -9,9 +9,13 @@ mvn clean spring-boot:run -Dspring-boot.run.profiles=dev
 
 System for booking excursions in FollowMe agency.
 
+This project build upon Java 17.
+
 Uses next Spring Projects: 
 - Boot
 - Data
+- MVC
+- Security
 
 Used libraries 
 - Lombok
