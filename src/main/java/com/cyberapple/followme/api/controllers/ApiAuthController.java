@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.JwtService;
+import com.cyberapple.followme.services.TokenBlackListService;
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.exceptions.InvalidCredentialsException;
 import com.cyberapple.followme.records.AuthResponse;
@@ -23,6 +24,8 @@ public class ApiAuthController {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtService jwtService;
+
+    private final TokenBlackListService tokenBlackListService;
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest loginRequest) {
@@ -49,6 +52,13 @@ public class ApiAuthController {
         user.setPassword(passwordEncoder.encode(userInput.password()));
 
         userRepository.save(user);
+    }
+
+    @GetMapping("/logout")
+    @PreAuthorize("isAuthenticated()")
+    public void logout(@RequestHeader("Authorization") String token) {
+        String cleanToken = token.replace("Bearer ", "");
+        tokenBlackListService.addTokenToBlacklist(cleanToken);
     }
 
     @GetMapping("users")

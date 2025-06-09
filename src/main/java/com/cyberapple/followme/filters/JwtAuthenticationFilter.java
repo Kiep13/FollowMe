@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.cyberapple.followme.services.TokenBlackListService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -23,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor  
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
+
+    private final TokenBlackListService tokenBlackListService;
 
     @Value("${jwt.secret.key}")
     private String secretKey;
@@ -39,6 +43,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = header.replace("Bearer ", "");
         try {
+            if(tokenBlackListService.isTokenBlacklisted(token)) {
+                SecurityContextHolder.clearContext();
+                chain.doFilter(request, response);
+                return;
+            }
+
             Claims claims = Jwts.parser()
                     .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()
@@ -48,6 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
 
             if (username != null) {
+
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
