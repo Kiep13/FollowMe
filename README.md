@@ -13,6 +13,8 @@ This project build upon Java 17.
 
 Uses next Spring Projects: 
 - Boot
+  - DI
+  - AOP
 - Data
 - MVC
 - Security

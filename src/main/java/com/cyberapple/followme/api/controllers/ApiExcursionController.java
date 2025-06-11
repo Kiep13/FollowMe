@@ -9,6 +9,7 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.services.ExcursionService;
+import com.cyberapple.followme.exceptions.NotFoundException;
 
 @RestController
 @RequestMapping("api/excursions")
@@ -34,7 +35,7 @@ public class ApiExcursionController {
     }
 
     @GetMapping("/{id}")
-    public ExcursionDto getExcursionById(@PathVariable String id) {
+    public ExcursionDto getExcursionById(@PathVariable String id) throws NotFoundException {
         return excursionService.getExcursionById(id);
     }
 }

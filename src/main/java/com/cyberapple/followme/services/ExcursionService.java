@@ -5,8 +5,10 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
+import com.cyberapple.followme.exceptions.NotFoundException;
 
 import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,9 +24,17 @@ public class ExcursionService {
         return this.excursionRepository.getPriceRange();
     }
 
-    public ExcursionDto getExcursionById(String id) {
-        // TODO: Add error handling here
-        return this.excursionRepository.findExcursionWithAvailablePlacesById(id).orElse(null);
+    public ExcursionDto getExcursionById(String id) throws NotFoundException {
+        if (id == null || id.isEmpty()) {
+            throw new NotFoundException("Excursion id cannot be null or empty");
+        }
+
+        if(excursionRepository.existsById(id) == false) {
+            throw new NotFoundException("Excursion not found with id: " + id);
+        }
+
+        return this.excursionRepository.findExcursionWithAvailablePlacesById(id)
+                .orElseThrow(() -> new NotFoundException("Excursion not found with id: " + id));
     }
 
     public void createExcursion(ExcursionInput excursionInput) {

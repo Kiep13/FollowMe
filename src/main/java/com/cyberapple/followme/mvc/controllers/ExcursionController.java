@@ -1,6 +1,9 @@
 package com.cyberapple.followme.mvc.controllers;
 
+import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.services.ExcursionService;
+import com.cyberapple.followme.exceptions.NotFoundException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +29,8 @@ public class ExcursionController {
     }
 
     @GetMapping("/excursions/{id}")
-    public String getExcursionPage(@PathVariable String id, Model model) {
-        var excursion = excursionService.getExcursionById(id);
+    public String getExcursionPage(@PathVariable String id, Model model) throws NotFoundException {
+        ExcursionDto excursion = excursionService.getExcursionById(id);
 
         model.addAttribute("excursion", excursion);
         return "excursion";
