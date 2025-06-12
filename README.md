@@ -15,13 +15,14 @@ Uses next Spring Projects:
 - Boot
   - DI
   - AOP
+  - Actuator
 - Data
 - MVC
 - Security
 
 Used libraries 
 - Lombok
-- H2 (for internal database)
+- H2 (for inmemory database)
 
 ## Project functionality
 

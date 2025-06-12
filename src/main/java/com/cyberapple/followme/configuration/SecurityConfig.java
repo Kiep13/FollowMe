@@ -2,6 +2,7 @@ package com.cyberapple.followme.configuration;
 
 import com.cyberapple.followme.filters.JwtAuthenticationFilter;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -38,6 +39,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/**", "/login").permitAll() 
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated() 
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
