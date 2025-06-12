@@ -45,6 +45,18 @@ Future functionality
   - Statistics
   - Send notifications
 
+## Actuator
+
+Available edn point (secured by ADMIN role)
+- app/health
+- app/info
+- app/metrics
+
+Custom metrics
+- api.calls.excursions,
+- api.calls.login
+- api.calls.booking
+
 ## Tests
 
 To run tests, use the following command:
