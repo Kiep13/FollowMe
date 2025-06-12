@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "660307b4-ecfc-474c-afad-4a5e4ecd69fd",
+		"name": "FollowMe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37138144"
+	},
+	"item": [
+		{
+			"name": "Excursions",
+			"item": [
+				{
+					"name": "Configuration",
+					"item": [
+						{
+							"name": "Country List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/countries/list",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"countries",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Price Range",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/excursions/price-range",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"excursions",
+										"price-range"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Excursions List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Excursion By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/{{excursionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"{{excursionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Excursion By Id [NotFound]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/cdcd4ab4-a645-45ee-af5e-795dc7082682",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"cdcd4ab4-a645-45ee-af5e-795dc7082682"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Excursion By Id [Invalid Id]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/invalidId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"invalidId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Admin] Create Excursion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Northern Lights Aurora\",\n  \"imageUrl\": \"https://cdn.mos.cms.futurecdn.net/v2/t:0,l:0,cw:2120,ch:1193,q:80,w:2120/57jQMDN5MZLYfV8ps8HuZQ.jpg\",\n  \"description\": \"Join our immersive evening workshop in Iceland, where you'll learn to capture the mesmerizing beauty of the Aurora Borealis under the guidance of professional photographers. Includes transport, equipment rental, and hot drinks.\",\n  \"date\": \"2025-12-15\",\n  \"price\": 250,\n  \"amountOfPlaces\": 15,\n  \"country\": \"Iceland\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login as [Admin]",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as [User]",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Alica\",\n    \"lastName\": \"Wonder\",\n    \"email\": \"a2@bk.ru\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Join Excursion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"participants\": [\n        {\n            \"firstName\": \"Miroslava\",\n            \"lastName\": \"Chovan\",\n            \"citizenship\": \"Slovakia\",\n            \"dateOfBirth\": \"1990-07-05\",\n            \"passportNumber\": \"SK024051\"\n        },\n            {\n            \"firstName\": \"Jakub\",\n            \"lastName\": \"Chovan\",\n            \"citizenship\": \"Slovakia\",\n            \"dateOfBirth\": \"1989-03-12\",\n            \"passportNumber\": \"SK028021\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{excursionId}}/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"{{excursionId}}",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Booking List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/my",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"my"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "[Admin] Users",
+			"item": [
+				{
+					"name": "Users List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "test",
+			"type": "string"
+		}
+	]
+}
