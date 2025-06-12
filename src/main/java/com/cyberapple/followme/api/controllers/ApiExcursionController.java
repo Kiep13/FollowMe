@@ -9,6 +9,9 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.services.ExcursionService;
+
+import io.micrometer.core.annotation.Counted;
+
 import com.cyberapple.followme.exceptions.NotFoundException;
 
 @RestController
@@ -19,6 +22,7 @@ public class ApiExcursionController {
     private final ExcursionService excursionService;
 
     @GetMapping("")
+    @Counted(value = "api.calls.excursions", description = "Number of calls to /api/excursions")
     public Iterable<ExcursionDto> getAllExcursions() {
         return excursionService.getAllExcursions();
     }

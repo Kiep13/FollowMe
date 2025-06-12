@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.JwtService;
 import com.cyberapple.followme.services.TokenBlackListService;
+
+import io.micrometer.core.annotation.Counted;
+
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.exceptions.InvalidCredentialsException;
 import com.cyberapple.followme.records.AuthResponse;
@@ -28,6 +31,7 @@ public class ApiAuthController {
     private final TokenBlackListService tokenBlackListService;
 
     @PostMapping("/login")
+    @Counted(value = "api.calls.login", description = "Number of calls to /login")
     public AuthResponse login(@RequestBody LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.email())
                 .orElseThrow(() -> new InvalidCredentialsException("User not found with email: " + loginRequest.email()));

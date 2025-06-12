@@ -12,6 +12,7 @@ import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.services.BookingService;
 
+import io.micrometer.core.annotation.Counted;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -29,6 +30,7 @@ public class ApiBookingController {
 
     @PostMapping("/{id}/add")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Counted(value = "api.calls.booking", description = "Number of calls to /api/{excursionId}/add")
     public void registerForExcursion(@PathVariable String id, @RequestBody BookingInput bookingInput) {
         bookingService.registerForExcursion(id, bookingInput);
     }

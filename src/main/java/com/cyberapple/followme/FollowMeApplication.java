@@ -1,6 +1,7 @@
 package com.cyberapple.followme;
 
 import com.cyberapple.followme.configuration.WebConfig;
+import com.cyberapple.followme.configuration.MetricConfig;
 import com.cyberapple.followme.configuration.SecurityConfig;
 
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-@Import({WebConfig.class, SecurityConfig.class})
+@Import({WebConfig.class, SecurityConfig.class, MetricConfig.class})
 public class FollowMeApplication {
 
 	public static void main(String[] args) {
