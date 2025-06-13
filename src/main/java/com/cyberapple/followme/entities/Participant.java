@@ -4,6 +4,8 @@ import com.cyberapple.followme.records.ParticipantInput;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,8 +34,8 @@ public class Participant {
 
     private LocalDate dateOfBirth;
 
-    // TODO: should it be enum?
-    private String citizenship;
+    @Enumerated(EnumType.STRING)
+    private Country citizenship;
 
     // TODO: add validation for this field
     private String passportNumber;
@@ -51,7 +53,7 @@ public class Participant {
         this.firstName = participantApiInput.firstName();
         this.lastName = participantApiInput.lastName();
         this.dateOfBirth = participantApiInput.dateOfBirth();
-        this.citizenship = participantApiInput.citizenship();
+        this.citizenship = Country.valueOf(participantApiInput.citizenship());
         this.passportNumber = participantApiInput.passportNumber();
     }
 

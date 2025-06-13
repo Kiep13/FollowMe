@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS participant (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     date_of_birth DATE NOT NULL,
-    citizenship VARCHAR(50) NOT NULL,
+    citizenship country_enum NOT NULL,
     passport_number VARCHAR(50) NOT NULL,
     participation_id UUID NOT NULL,
     FOREIGN KEY (participation_id) REFERENCES participation (id)
