@@ -5,7 +5,7 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
-import com.cyberapple.followme.validators.ExcursionIdValidator;
+import com.cyberapple.followme.validators.ExcursionValidator;
 import com.cyberapple.followme.exceptions.NotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ExcursionService {
     private final ExcursionRepository excursionRepository;
-    private final ExcursionIdValidator excursionIdValidator;
+    private final ExcursionValidator excursionIdValidator;
 
     public Iterable<ExcursionDto> getAllExcursions() {
         return this.excursionRepository.findAllExcursionsWithAvailablePlaces();

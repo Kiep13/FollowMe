@@ -13,7 +13,7 @@ import com.cyberapple.followme.exceptions.NotFoundException;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
-import com.cyberapple.followme.validators.ExcursionIdValidator;
+import com.cyberapple.followme.validators.ExcursionValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -24,7 +24,7 @@ public class BookingService {
     private final ParticipationRepository participationRepository;
     private final AuthenticationService authenticationService;
 
-    private final ExcursionIdValidator excursionIdValidator;
+    private final ExcursionValidator excursionIdValidator;
 
     @Transactional
     public void registerForExcursion(String excursionId, BookingInput bookingInput) throws NotFoundException {
