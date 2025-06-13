@@ -1,4 +1,6 @@
 package com.cyberapple.followme.records;
 
-public record BookingInput(Iterable<ParticipantInput> participants) {
+import jakarta.validation.Valid;
+
+public record BookingInput(@Valid Iterable<ParticipantInput> participants) {
 }
