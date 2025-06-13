@@ -5,11 +5,10 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
+import com.cyberapple.followme.validators.ExcursionIdValidator;
 import com.cyberapple.followme.exceptions.NotFoundException;
 
 import lombok.AllArgsConstructor;
-
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ExcursionService {
     private final ExcursionRepository excursionRepository;
+    private final ExcursionIdValidator excursionIdValidator;
 
     public Iterable<ExcursionDto> getAllExcursions() {
         return this.excursionRepository.findAllExcursionsWithAvailablePlaces();
@@ -27,19 +27,7 @@ public class ExcursionService {
     }
 
     public ExcursionDto getExcursionById(String id) throws NotFoundException {
-        if (id == null || id.isEmpty()) {
-            throw new NotFoundException("Excursion id cannot be null or empty");
-        }
-
-        try {
-            UUID.fromString(id); 
-        } catch (IllegalArgumentException e) {
-            throw new NotFoundException("Invalid format for excursion id: " + id);
-        }
-
-        if(excursionRepository.existsById(id) == false) {
-            throw new NotFoundException("Excursion not found with id: " + id);
-        }
+        excursionIdValidator.validateExcursionId(id);
 
         return this.excursionRepository.findExcursionWithAvailablePlacesById(id)
                 .orElseThrow(() -> new NotFoundException("Excursion not found with id: " + id));

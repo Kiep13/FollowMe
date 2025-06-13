@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cyberapple.followme.entities.Participant;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.entities.User;
+import com.cyberapple.followme.exceptions.NotFoundException;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
+import com.cyberapple.followme.validators.ExcursionIdValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -22,8 +24,11 @@ public class BookingService {
     private final ParticipationRepository participationRepository;
     private final AuthenticationService authenticationService;
 
+    private final ExcursionIdValidator excursionIdValidator;
+
     @Transactional
-    public void registerForExcursion(String excursionId, BookingInput bookingInput) {
+    public void registerForExcursion(String excursionId, BookingInput bookingInput) throws NotFoundException {
+        excursionIdValidator.validateExcursionId(excursionId);
 
         Participation participation = new Participation();
         participation.setExcursion(this.excursionRepository.findById(excursionId).orElse(null));
