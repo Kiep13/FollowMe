@@ -36,7 +36,8 @@ public class Excursion {
 
     private Integer amountOfPlaces;
 
-    private String country;
+    @Enumerated(EnumType.STRING)
+    private Country country;
 
     @OneToMany(mappedBy = "excursion", cascade = CascadeType.ALL)
     @JsonBackReference

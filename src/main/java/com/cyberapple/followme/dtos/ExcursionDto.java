@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+import com.cyberapple.followme.entities.Country;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,9 +28,9 @@ public class ExcursionDto {
 
     private Integer availablePlaces;
 
-    private String country;
+    private Country country;
 
-    public ExcursionDto(String id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants, String country) {
+    public ExcursionDto(String id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants, Country country) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;

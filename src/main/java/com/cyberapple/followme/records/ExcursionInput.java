@@ -2,6 +2,8 @@ package com.cyberapple.followme.records;
 
 import java.time.LocalDate;
 
+import com.cyberapple.followme.entities.Country;
+
 public record ExcursionInput(
     String title,
     String imageUrl,
@@ -9,6 +11,6 @@ public record ExcursionInput(
     LocalDate date,
     Integer price,
     Integer amountOfPlaces,
-    String country
+    Country country
 ) {
 }
