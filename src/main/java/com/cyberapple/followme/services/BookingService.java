@@ -11,8 +11,10 @@ import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.exceptions.NotFoundException;
 import com.cyberapple.followme.records.BookingInput;
+import com.cyberapple.followme.records.ParticipantInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
+import com.cyberapple.followme.validators.BookingValidator;
 import com.cyberapple.followme.validators.ExcursionValidator;
 
 import lombok.AllArgsConstructor;
@@ -25,10 +27,14 @@ public class BookingService {
     private final AuthenticationService authenticationService;
 
     private final ExcursionValidator excursionIdValidator;
+    private final BookingValidator bookingValidator;
 
     @Transactional
     public void registerForExcursion(String excursionId, BookingInput bookingInput) throws NotFoundException {
         excursionIdValidator.validateExcursionId(excursionId);
+
+        int amountOfParticipants = getAmountOfParticipants(bookingInput.participants());
+        bookingValidator.validateFreeSears(excursionId, amountOfParticipants);
 
         Participation participation = new Participation();
         participation.setExcursion(this.excursionRepository.findById(excursionId).orElse(null));
@@ -55,5 +61,14 @@ public class BookingService {
         Iterable<Participation> participations = this.participationRepository.findByUser(user);
 
         return participations;
+    }
+
+    private int getAmountOfParticipants(Iterable<ParticipantInput> participants) {
+        int amountOfParticipants = 0;
+        for (var ignored : participants) {
+            amountOfParticipants++;
+        }
+
+        return amountOfParticipants;
     }
 }
