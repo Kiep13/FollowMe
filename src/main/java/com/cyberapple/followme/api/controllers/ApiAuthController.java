@@ -10,6 +10,7 @@ import com.cyberapple.followme.services.JwtService;
 import com.cyberapple.followme.services.TokenBlackListService;
 
 import io.micrometer.core.annotation.Counted;
+import jakarta.validation.Valid;
 
 import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.exceptions.InvalidCredentialsException;
@@ -47,7 +48,7 @@ public class ApiAuthController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserInput userInput) {
+    public void register(@Valid @RequestBody UserInput userInput) {
         if (userRepository.existsByEmail(userInput.email())) {
             throw new IllegalArgumentException("User with this email already exists");
         }
