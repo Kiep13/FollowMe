@@ -26,24 +26,33 @@ Used libraries
 
 ## Project functionality
 
+### MVC:
+
 Existing functionality
 - [Get list of all excursions in web](http://localhost:8080/excursions)
 - Get excursion by id (better to navigate from previous one)
-- Book to excursion (development in progress)
+
+### Web Api:
+
+You can use postman collection (`FollowMe.postman_collection.json` file in the root) to see list of available endpoint and their paramters
+
+Available functionality
+- See list of excursions
+  - Ger excursion by id
+  - Book on excursion (including several participant)
+  - See list of my booked excursions
+- [Admin] See list of users
+- [Admin] App health state 
 
 Future functionality
-- Interacting with excursions.
-  - See list of all available excursions
-    - Filter by amount of open places, country, price, tags
-  - See details of excursion
+- More interactions with excursions.
+  - Filter by amount of open places, country, price, tags
 - Booking excursion
-  - See list of all booked excursions
-  - Book excursion for several people
   - Cancel booking
 - Admin functionality
-  - CRUD for excursion
-  - Statistics
-  - Send notifications
+  - CRUD for excursion (not it fills only form sql script)
+  - Statistics (see which excursions more popular)
+  - Send notifications (by emails)
 
 ## Actuator
 
