@@ -30,7 +30,7 @@ Used libraries
 
 Existing functionality
 - [Get list of all excursions in web](http://localhost:8080/excursions)
-- Get excursion by id (better to navigate from previous one)
+- Get excursion by id ([example link](http://localhost:8080/excursions/4a27e13d-70bd-4aed-b242-e6f9ab4b1186))
 
 ### Web Api:
 

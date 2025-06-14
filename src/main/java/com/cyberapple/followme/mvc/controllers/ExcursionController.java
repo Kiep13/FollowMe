@@ -36,11 +36,15 @@ public class ExcursionController {
         return "excursion";
     }
 
+    // Deprecated
+    // Not allowed by security anymore
     @GetMapping("/admin/excursions/new")
     public String getExcursionAddForm() {
         return "excursion-form";
     }
 
+    // Deprecated
+    // Not allowed by security anymore
     @PostMapping("/admin/excursions/new")
     public RedirectView saveNewExcursion() {
         return new RedirectView("excursions");

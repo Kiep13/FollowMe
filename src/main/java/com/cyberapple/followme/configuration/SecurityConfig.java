@@ -38,6 +38,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(authorize -> authorize
+                // Web MVC pages
+                .requestMatchers("/excursions", "/excursions/*").permitAll() 
+                // Rest API endpoints
                 .requestMatchers("/api/**", "/login").permitAll() 
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated() 
