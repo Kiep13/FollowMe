@@ -13,7 +13,40 @@ INSERT INTO users (id, first_name, last_name, email, password, role) VALUES
 ('c7b3f611-4ff2-4456-b545-4834e1accda6', 'Georgia', 'Blackwell', 'user@gmail.com', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36', 'USER');
 
 CREATE TYPE country_enum AS ENUM (
-    'sk', 'hr', 'cz', 'at', 'hu', 'de', 'it', 'pl', 'si', 'fr', 'es', 'gr', 'uk', 'nl', 'be', 'ch', 'pt', 'se', 'no', 'fi', 'dk', 'ie', 'ru', 'ua', 'bg', 'ro', 'rs', 'tr', 'cy', 'mt', 'is', 'lu', 'ee', 'lv', 'lt', 'by', 'al', 'me', 'mk', 'xk', 'md'
+    -- Europe
+    'sk', 'hr', 'cz', 'at', 'hu', 'de', 'it', 'pl', 'si', 'fr', 
+    'es', 'gr', 'uk', 'nl', 'be', 'ch', 'pt', 'se', 'no', 'fi', 
+    'dk', 'ie', 'ru', 'ua', 'bg', 'ro', 'rs', 'tr', 'cy', 'mt', 
+    'is', 'lu', 'ee', 'lv', 'lt', 'by', 'al', 'me', 'mk', 'xk', 
+    'md', 'ad', 'li', 'va', 'sm', 'mc',
+    
+    -- Asia
+    'af', 'am', 'az', 'bh', 'bd', 'bt', 'bn', 'kh', 'cn', 'ge', 
+    'in', 'id', 'ir', 'iq', 'il', 'jp', 'jo', 'kz', 'kw', 'kg', 
+    'la', 'lb', 'my', 'mv', 'mn', 'mm', 'np', 'kp', 'om', 'pk', 
+    'ph', 'qa', 'sa', 'sg', 'kr', 'lk', 'sy', 'tw', 'tj', 'th', 
+    'tl', 'tm', 'ae', 'uz', 'vn', 'ye',
+    
+    -- Africa
+    'dz', 'ao', 'bj', 'bw', 'bf', 'bi', 'cv', 'cm', 'cf', 'td', 
+    'km', 'cd', 'cg', 'ci', 'dj', 'eg', 'gq', 'er', 'sz', 'et', 
+    'ga', 'gm', 'gh', 'gn', 'gw', 'ke', 'ls', 'lr', 'ly', 'mg', 
+    'mw', 'ml', 'mr', 'mu', 'ma', 'mz', 'na', 'ne', 'ng', 'rw', 
+    'st', 'sn', 'sc', 'sl', 'so', 'za', 'ss', 'sd', 'tz', 'tg', 
+    'tn', 'ug', 'zm', 'zw',
+    
+    -- Americas
+    'ag', 'ar', 'aw', 'bs', 'bb', 'bz', 'bm', 'bo', 'br', 'ca', 
+    'ky', 'cl', 'co', 'cr', 'cu', 'cw', 'dm', 'do', 'ec', 'sv', 
+    'fk', 'gd', 'gp', 'gt', 'gy', 'ht', 'hn', 'jm', 'mq', 'mx', 
+    'ms', 'ni', 'pa', 'py', 'pe', 'pr', 'bl', 'kn', 'lc', 'mf', 
+    'pm', 'vc', 'sx', 'sr', 'tt', 'tc', 'us', 'uy', 've', 'vg', 
+    'vi',
+    
+    -- Oceania
+    'as', 'au', 'ck', 'fj', 'pf', 'gu', 'ki', 'mh', 'fm', 'nr', 
+    'nc', 'nz', 'nu', 'mp', 'pw', 'pg', 'ws', 'sb', 'tk', 'to', 
+    'tv', 'vu', 'wf'
 );
 
 CREATE TABLE IF NOT EXISTS excursion (

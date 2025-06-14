@@ -2,6 +2,8 @@ package com.cyberapple.followme.records;
 
 import java.time.LocalDate;
 
+import com.cyberapple.followme.annotations.CountryCode;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -16,7 +18,7 @@ public record ParticipantInput(
     @Past(message = "Date of birth must be in the past")
     LocalDate dateOfBirth, 
     
-    @NotBlank(message = "Participant citizenship is required")
+    @CountryCode
     String citizenship, 
     
     @NotBlank(message = "Passport number is required")
