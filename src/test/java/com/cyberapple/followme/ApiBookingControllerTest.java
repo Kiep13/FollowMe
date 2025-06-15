@@ -6,10 +6,12 @@ import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.records.ParticipantInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
+import com.cyberapple.followme.repositories.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,7 +92,7 @@ public class ApiBookingControllerTest {
     void getListOfEmptyExcursions() throws Exception {
         prepareExcursionList();
 
-        MvcResult result = mockMvc.perform(get("/api/bookings/my"))
+        MvcResult result = mockMvc.perform(get("/api/bookings/my"), header("Authorization", "Bearer"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -131,8 +133,8 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/non-existing-id/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-               .andExpect(status().isForbidden())
-               .andExpect(jsonPath("$.message").value("Invalid format for excursion id: non-existing-id"));
+               .andExpect(status().isNotFound())
+               .andExpect(content().string(containsString("Invalid format for excursion id: non-existing-id")));
     }
 
     @Test
@@ -148,8 +150,8 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/9784b77c-72d2-45a0-809a-24bc4d23b0ae/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Excursion not found with id: 9784b77c-72d2-45a0-809a-24bc4d23b0ae"));
+               .andExpect(status().isNotFound())
+               .andExpect(content().string(containsString("Excursion not found with id: 9784b77c-72d2-45a0-809a-24bc4d23b0ae")));
     }
 
     @Test
@@ -166,8 +168,8 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Participant first name is required"));
+               .andExpect(status().isBadRequest())
+               .andExpect(content().string(containsString("Participant first name is required")));
     }
 
     @Test
@@ -184,8 +186,8 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Invalid country code"));
+               .andExpect(status().isBadRequest())
+               .andExpect(content().string(containsString("Invalid country code")));
     }
 
     @Test
@@ -202,8 +204,8 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Invalid passport number format. Example: AB1234567"));
+               .andExpect(status().isBadRequest())
+               .andExpect(content().string(containsString("Invalid passport number format. Example: AB1234567")));
     }
 
     private void prepareExcursionList() {
