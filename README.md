@@ -39,10 +39,13 @@ You can use postman collection (`FollowMe.postman_collection.json` file in the r
 Available functionality
 - See list of excursions
   - Ger excursion by id
-  - Book on excursion (including several participant)
-  - See list of my booked excursions
+  - [USER] Book on excursion (including several participant)
+  - [USER] See list of my booked excursions
 - [Admin] See list of users
 - [Admin] App health state 
+
+To use role required end point, you need to have `Authorization` header in format `Bearer: {{accessToken}}`. 
+Access token can be received via login endpoint. 
 
 Future functionality
 - More interactions with excursions.
