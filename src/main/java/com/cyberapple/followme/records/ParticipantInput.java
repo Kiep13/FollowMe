@@ -22,7 +22,7 @@ public record ParticipantInput(
     String citizenship, 
     
     @NotBlank(message = "Passport number is required")
-    @Pattern(regexp = "^[A-Za-z]{2}\\d{7}$", message = "Invalid passport number format. Example: AB1234567") // ✅
+    @Pattern(regexp = "^[A-Za-z]{2}\\d{7}$", message = "Invalid passport number format. Example: AB1234567")
     String passportNumber
 ) { 
 }

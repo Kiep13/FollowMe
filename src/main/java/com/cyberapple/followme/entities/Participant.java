@@ -37,7 +37,6 @@ public class Participant {
     @Enumerated(EnumType.STRING)
     private Country citizenship;
 
-    // TODO: add validation for this field
     private String passportNumber;
 
     @ManyToOne
