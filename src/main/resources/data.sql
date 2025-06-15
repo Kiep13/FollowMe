@@ -18,7 +18,7 @@ CREATE TYPE country_enum AS ENUM (
     'es', 'gr', 'uk', 'nl', 'be', 'ch', 'pt', 'se', 'no', 'fi', 
     'dk', 'ie', 'ru', 'ua', 'bg', 'ro', 'rs', 'tr', 'cy', 'mt', 
     'is', 'lu', 'ee', 'lv', 'lt', 'by', 'al', 'me', 'mk', 'xk', 
-    'md', 'ad', 'li', 'va', 'sm', 'mc',
+    'md', 'ad', 'li', 'va', 'sm', 'mc', 'gb',
     
     -- Asia
     'af', 'am', 'az', 'bh', 'bd', 'bt', 'bn', 'kh', 'cn', 'ge', 

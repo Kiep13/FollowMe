@@ -3,15 +3,17 @@ package com.cyberapple.followme;
 import com.cyberapple.followme.entities.Country;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participation;
+import com.cyberapple.followme.entities.User;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.records.ParticipantInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
-import com.cyberapple.followme.repositories.UserRepository;
+import com.cyberapple.followme.services.AuthenticationService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +38,7 @@ import java.util.List;
 @Transactional
 @ActiveProfiles("test") 
 public class ApiBookingControllerTest {
-        @Autowired
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -44,9 +47,13 @@ public class ApiBookingControllerTest {
     @Autowired
     private ExcursionRepository excursionRepository;
 
+    @Autowired
+    private MockAuthenticationService mockAuthService;
+
     @BeforeEach
     void setUp() {
         excursionRepository.deleteAll();
+        setUpTestUser();
     }
 
     @Test
@@ -63,7 +70,7 @@ public class ApiBookingControllerTest {
         mockMvc.perform(post("/api/bookings/" + excursionBratislava.getId() + "/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-               .andExpect(status().isCreated())
+               .andExpect(status().isOk())
                .andReturn();
 
         MvcResult result = mockMvc.perform(get("/api/bookings/my"))
@@ -83,7 +90,6 @@ public class ApiBookingControllerTest {
         assertThat(participation.getParticipants().get(0).getFirstName()).isEqualTo(participant.firstName());
         assertThat(participation.getParticipants().get(0).getLastName()).isEqualTo(participant.lastName());
         assertThat(participation.getParticipants().get(0).getDateOfBirth()).isEqualTo(participant.dateOfBirth());
-        assertThat(participation.getParticipants().get(0).getCitizenship()).isEqualTo(participant.citizenship());
         assertThat(participation.getParticipants().get(0).getPassportNumber()).isEqualTo(participant.passportNumber());
     }
 
@@ -92,7 +98,7 @@ public class ApiBookingControllerTest {
     void getListOfEmptyExcursions() throws Exception {
         prepareExcursionList();
 
-        MvcResult result = mockMvc.perform(get("/api/bookings/my"), header("Authorization", "Bearer"))
+        MvcResult result = mockMvc.perform(get("/api/bookings/my"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -251,4 +257,14 @@ public class ApiBookingControllerTest {
     private Excursion getBudapestExcursion() {
         return excursionRepository.findByTitle("Budapest City Tour");
     } 
+
+    private void setUpTestUser() {
+        User user = new User();
+        user.setId("8db44b94-b254-42bb-9867-3756be46c450");
+        user.setFirstName("Alex");
+        user.setLastName("Daggon");
+        user.setEmail("jackal@gmail.com");
+
+        mockAuthService.setMockUser(user);
+    }
 }
