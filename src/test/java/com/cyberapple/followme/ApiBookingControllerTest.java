@@ -1,11 +1,9 @@
 package com.cyberapple.followme;
 
-import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.Country;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.records.BookingInput;
-import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.records.ParticipantInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 
@@ -23,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +32,7 @@ import java.util.List;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test") 
-public class ApiBookingController {
+public class ApiBookingControllerTest {
         @Autowired
     private MockMvc mockMvc;
 
@@ -57,7 +54,7 @@ public class ApiBookingController {
         Excursion excursionBratislava = getBratislavaExcursion();
 
         ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
-                LocalDate.of(1981, 1, 1), "db", "AB1234567");
+                LocalDate.of(1981, 1, 1), "gb", "AB1234567");
 
         BookingInput participationInput = new BookingInput(List.of(participant));
 
@@ -108,17 +105,105 @@ public class ApiBookingController {
     @Test
     void registerForExcursionUnauthorized() throws Exception {
         prepareExcursionList();
-        Excursion excursionBratislava = getBratislavaExcursion();
+        Excursion excursionVienna = getViennaExcursion();
+
+        ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
+                LocalDate.of(1981, 1, 1), "gb", "AB1234567");
+
+        BookingInput participationInput = new BookingInput(List.of(participant));
+
+        mockMvc.perform(post("/api/bookings/" + excursionVienna.getId() + "/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(participationInput)))
+               .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void registerForExcursionInvalidExcursionId() throws Exception {
+        prepareExcursionList();
+
+        ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
+                LocalDate.of(1981, 1, 1), "gb", "AB1234567");
+
+        BookingInput participationInput = new BookingInput(List.of(participant));
+
+        mockMvc.perform(post("/api/bookings/non-existing-id/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(participationInput)))
+               .andExpect(status().isForbidden())
+               .andExpect(jsonPath("$.message").value("Invalid format for excursion id: non-existing-id"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void registerForExcursionNotFoundExcursionId() throws Exception {
+        prepareExcursionList();
+
+        ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
+                LocalDate.of(1981, 1, 1), "gb", "AB1234567");
+
+        BookingInput participationInput = new BookingInput(List.of(participant));
+
+        mockMvc.perform(post("/api/bookings/9784b77c-72d2-45a0-809a-24bc4d23b0ae/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(participationInput)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Excursion not found with id: 9784b77c-72d2-45a0-809a-24bc4d23b0ae"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void registerForExcursionEmptyParticipantName() throws Exception {
+        prepareExcursionList();
+        Excursion excursion = getBratislavaExcursion();
+
+        ParticipantInput participant = new ParticipantInput("", "Duggan", 
+                LocalDate.of(1981, 1, 1), "gb", "AB1234567");
+
+        BookingInput participationInput = new BookingInput(List.of(participant));
+
+        mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(participationInput)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Participant first name is required"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void registerForExcursionInvalidCountryCode() throws Exception {
+        prepareExcursionList();
+        Excursion excursion = getBratislavaExcursion();
 
         ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
                 LocalDate.of(1981, 1, 1), "db", "AB1234567");
 
         BookingInput participationInput = new BookingInput(List.of(participant));
 
-        mockMvc.perform(post("/api/bookings/" + excursionBratislava.getId() + "/add")
+        mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(participationInput)))
-               .andExpect(status().isForbidden());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Invalid country code"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void registerForExcursionInvalidPassportNumber() throws Exception {
+        prepareExcursionList();
+        Excursion excursion = getBratislavaExcursion();
+
+        ParticipantInput participant = new ParticipantInput("Alex", "Duggan", 
+                LocalDate.of(1981, 1, 1), "gb", "1234567890987654321");
+
+        BookingInput participationInput = new BookingInput(List.of(participant));
+
+        mockMvc.perform(post("/api/bookings/" + excursion.getId() + "/add")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(participationInput)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Invalid passport number format. Example: AB1234567"));
     }
 
     private void prepareExcursionList() {

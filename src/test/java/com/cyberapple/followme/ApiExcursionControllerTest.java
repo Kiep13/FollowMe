@@ -31,7 +31,7 @@ import java.util.List;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test") 
-public class ApiExcursionController {
+public class ApiExcursionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
