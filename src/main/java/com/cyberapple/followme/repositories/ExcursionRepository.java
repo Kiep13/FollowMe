@@ -11,6 +11,8 @@ import com.cyberapple.followme.entities.Excursion;
 
 public interface ExcursionRepository extends CrudRepository<Excursion, String> {
 
+    Excursion findByTitle(String string);
+
     @Query("""
         SELECT new com.cyberapple.followme.dtos.ExcursionDto(
             e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id), e.country
