@@ -17,8 +17,8 @@ public class JwtService {
     private String secretKey;
     
     @Value("${jwt.secret.expiration-time}")
-    private long expirationTime; // 1 hour
-
+    private long expirationTime; 
+    
     public String generateToken(UserData userData) {
         return Jwts.builder()
                 .subject(userData.email())
