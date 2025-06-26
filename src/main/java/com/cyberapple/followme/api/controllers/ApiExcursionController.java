@@ -3,11 +3,13 @@ package com.cyberapple.followme.api.controllers;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.dtos.ExcursionDto;
+import com.cyberapple.followme.dtos.ExcursionParticipantsDto;
 import com.cyberapple.followme.services.ExcursionService;
 
 import io.micrometer.core.annotation.Counted;
@@ -42,4 +44,10 @@ public class ApiExcursionController {
     public ExcursionDto getExcursionById(@PathVariable String id) throws NotFoundException {
         return excursionService.getExcursionById(id);
     }
+
+    @GetMapping("/{id}/participants")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ExcursionParticipantsDto getExcursionParticipants(@PathVariable String id) throws NotFoundException {
+        return excursionService.getExcursionParticipants(id);
+    }     
 }

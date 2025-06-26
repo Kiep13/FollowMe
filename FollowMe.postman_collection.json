@@ -172,6 +172,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "[Admin] Get excursion participants",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/{{excursionId}}/participants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"{{excursionId}}",
+								"participants"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

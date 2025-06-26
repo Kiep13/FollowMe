@@ -1,14 +1,21 @@
 package com.cyberapple.followme.services;
 
 import com.cyberapple.followme.dtos.ExcursionDto;
+import com.cyberapple.followme.dtos.ExcursionParticipantsDto;
 import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Excursion;
+import com.cyberapple.followme.entities.Participant;
+import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
+import com.cyberapple.followme.repositories.ParticipationRepository;
 import com.cyberapple.followme.validators.ExcursionValidator;
 import com.cyberapple.followme.exceptions.NotFoundException;
 
 import lombok.AllArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +23,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ExcursionService {
     private final ExcursionRepository excursionRepository;
+    private final ParticipationRepository participationRepository;
+
     private final ExcursionValidator excursionIdValidator;
 
     public Iterable<ExcursionDto> getAllExcursions() {
@@ -36,5 +45,21 @@ public class ExcursionService {
     public void createExcursion(ExcursionInput excursionInput) {
         Excursion excursion = new Excursion(excursionInput);
         this.excursionRepository.save(excursion);
+    }
+
+    public ExcursionParticipantsDto getExcursionParticipants(String id) throws NotFoundException {
+        excursionIdValidator.validateExcursionId(id);
+
+        ExcursionDto excursion = this.excursionRepository.findExcursionWithAvailablePlacesById(id)
+                .orElseThrow(() -> new NotFoundException("Excursion not found with id: " + id));
+
+        Iterable<Participation> participations = this.participationRepository.findByExcursionId(excursion.getId());
+        List<Participant> participants = new ArrayList<>();
+
+        for (Participation participation : participations) {
+            participants.addAll(participation.getParticipants());
+        }
+
+        return new ExcursionParticipantsDto(excursion, participants);
     }
 }
