@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <!-- Чтение имени приложения из application.properties -->
+  <springProperty name="appName" source="spring.application.name" defaultValue="MyApp"/>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        %green([%d{HH:mm:ss.SSS}]) %green([%thread]) %magenta(%-5level)    
+        %blue(%logger{36})   
+        %yellow([${appName}])   
+        - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" />
+  </root>
+</configuration>
