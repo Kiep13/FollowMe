@@ -1,6 +1,9 @@
 package com.cyberapple.followme.configuration;
 
 import com.cyberapple.followme.filters.JwtAuthenticationFilter;
+import com.cyberapple.followme.repositories.UserRepository;
+import com.cyberapple.followme.services.CustomUserDetailsService;
+import com.cyberapple.followme.services.TokenBlackListService;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
@@ -23,15 +26,27 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class SecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final UserDetailsService userDetailsService;
+    @Bean 
+    public TokenBlackListService tokenBlackListService() {
+        return new TokenBlackListService();
+    }
+
+    @Bean 
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new CustomUserDetailsService(userRepository);
+    }
+
+    @Bean JwtAuthenticationFilter jwtAuthenticationFilter(UserDetailsService userDetailsService, TokenBlackListService tokenBlackListService) {
+        return new JwtAuthenticationFilter(userDetailsService, tokenBlackListService);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean 
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session
@@ -55,7 +70,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }

@@ -1,5 +1,6 @@
 package com.cyberapple.followme;
 
+import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.ExcursionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ class ApiExcursionControllerUnitTest {
 
     @MockitoBean
     ExcursionService excursionService;
+
+    @MockitoBean
+    UserRepository userRepository;
 
     @Test
     void contextLoads() {

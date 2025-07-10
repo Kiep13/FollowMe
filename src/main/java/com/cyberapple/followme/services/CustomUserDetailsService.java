@@ -15,7 +15,6 @@ import com.cyberapple.followme.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 
-@Service
 @AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
