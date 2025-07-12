@@ -1,4 +1,4 @@
-package com.cyberapple.followme;
+package com.cyberapple.followme.mocks;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;

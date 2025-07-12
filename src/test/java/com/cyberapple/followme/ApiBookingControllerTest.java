@@ -4,6 +4,7 @@ import com.cyberapple.followme.entities.Country;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participation;
 import com.cyberapple.followme.entities.User;
+import com.cyberapple.followme.mocks.MockAuthenticationService;
 import com.cyberapple.followme.records.BookingInput;
 import com.cyberapple.followme.records.ParticipantInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
