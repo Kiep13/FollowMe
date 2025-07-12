@@ -2,34 +2,27 @@ package com.cyberapple.followme.security.filters;
 
 import java.io.IOException;
 
+import com.cyberapple.followme.security.JwtAuthenticationToken;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.cyberapple.followme.security.TokenBlackListService;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 
-@Component
-@RequiredArgsConstructor  
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final UserDetailsService userDetailsService;
 
-    private final TokenBlackListService tokenBlackListService;
+    private final AuthenticationManager authenticationManager;
 
     @Value("${jwt.secret.key}")
     private String secretKey;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -42,32 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = header.replace("Bearer ", "");
+        JwtAuthenticationToken jwtAuthenticationToken = JwtAuthenticationToken.unauthenticated(token);
+
         try {
-            if(tokenBlackListService.isTokenBlacklisted(token)) {
-                SecurityContextHolder.clearContext();
-                chain.doFilter(request, response);
-                return;
-            }
+            var authentication = authenticationManager.authenticate(jwtAuthenticationToken);
 
-            Claims claims = Jwts.parser()
-                    .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-
-            String username = claims.getSubject();
-
-            if (username != null) {
-
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+            var newContext = SecurityContextHolder.createEmptyContext();
+            newContext.setAuthentication(authentication);
+            chain.doFilter(request, response);
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-
-        chain.doFilter(request, response);
     }
 }

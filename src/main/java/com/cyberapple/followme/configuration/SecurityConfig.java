@@ -1,14 +1,20 @@
 package com.cyberapple.followme.configuration;
 
+import com.cyberapple.followme.security.DatabaseAuthenticationProvider;
 import com.cyberapple.followme.security.filters.JwtAuthenticationFilter;
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.CustomUserDetailsService;
 import com.cyberapple.followme.security.TokenBlackListService;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,25 +25,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lombok.AllArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Bean 
-    public TokenBlackListService tokenBlackListService() {
-        return new TokenBlackListService();
-    }
+
+    @Autowired
+    private TokenBlackListService tokenBlackListService;
 
     @Bean 
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new CustomUserDetailsService(userRepository);
     }
 
-    @Bean JwtAuthenticationFilter jwtAuthenticationFilter(UserDetailsService userDetailsService, TokenBlackListService tokenBlackListService) {
-        return new JwtAuthenticationFilter(userDetailsService, tokenBlackListService);
+    @Bean
+    DatabaseAuthenticationProvider databaseAuthenticationProvider(UserDetailsService userDetailsService) {
+        return new DatabaseAuthenticationProvider(userDetailsService, tokenBlackListService);
     }
 
     @Bean
@@ -45,8 +49,23 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 
+    @Bean
+    ApplicationListener<AuthenticationSuccessEvent> successListener() {
+        return event -> {
+            System.out.println("Authentication successful for user: " + event.getAuthentication().getName());
+        };
+    }
+
     @Bean 
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            UserDetailsService userDetailsService,
+            DatabaseAuthenticationProvider databaseAuthenticationProvider,
+            AuthenticationEventPublisher authenticationEventPublisher
+    ) throws Exception {
+        var authenticationManager = new ProviderManager(databaseAuthenticationProvider);
+        authenticationManager.setAuthenticationEventPublisher(authenticationEventPublisher);
+
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session
@@ -60,18 +79,14 @@ public class SecurityConfig {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated() 
             )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .authenticationManager(authenticationManager)
+            .userDetailsService(userDetailsService)
+            .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .permitAll()
-            )
-            .csrf(csrf -> csrf.disable());
+            );
         
         return http.build();
-    }
-
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
     }
 }
