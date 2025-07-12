@@ -1,7 +1,7 @@
 package com.cyberapple.followme.configuration;
 
 import com.cyberapple.followme.security.DatabaseAuthenticationProvider;
-import com.cyberapple.followme.security.filters.JwtAuthenticationFilter;
+import com.cyberapple.followme.security.JwtSecurityConfigurer;
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.CustomUserDetailsService;
 import com.cyberapple.followme.security.TokenBlackListService;
@@ -13,8 +13,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -59,12 +58,13 @@ public class SecurityConfig {
     @Bean 
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
-            UserDetailsService userDetailsService,
             DatabaseAuthenticationProvider databaseAuthenticationProvider,
             AuthenticationEventPublisher authenticationEventPublisher
     ) throws Exception {
-        var authenticationManager = new ProviderManager(databaseAuthenticationProvider);
-        authenticationManager.setAuthenticationEventPublisher(authenticationEventPublisher);
+//        var authenticationManager = new ProviderManager(databaseAuthenticationProvider);
+//        authenticationManager.setAuthenticationEventPublisher(authenticationEventPublisher);
+
+        var jwtSecurityConfigurer = new JwtSecurityConfigurer(databaseAuthenticationProvider);
 
         http
             .csrf(csrf -> csrf.disable())
@@ -79,9 +79,7 @@ public class SecurityConfig {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated() 
             )
-            .authenticationManager(authenticationManager)
-            .userDetailsService(userDetailsService)
-            .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
+            .with(jwtSecurityConfigurer, Customizer.withDefaults())
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .permitAll()
