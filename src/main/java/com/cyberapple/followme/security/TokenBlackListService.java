@@ -1,4 +1,4 @@
-package com.cyberapple.followme.services;
+package com.cyberapple.followme.security;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

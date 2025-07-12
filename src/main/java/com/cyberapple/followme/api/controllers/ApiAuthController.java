@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.JwtService;
-import com.cyberapple.followme.services.TokenBlackListService;
+import com.cyberapple.followme.security.TokenBlackListService;
 
 import io.micrometer.core.annotation.Counted;
 import jakarta.validation.Valid;

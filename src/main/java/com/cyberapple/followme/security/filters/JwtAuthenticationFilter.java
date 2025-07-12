@@ -1,4 +1,4 @@
-package com.cyberapple.followme.filters;
+package com.cyberapple.followme.security.filters;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.cyberapple.followme.services.TokenBlackListService;
+import com.cyberapple.followme.security.TokenBlackListService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

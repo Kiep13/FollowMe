@@ -1,9 +1,9 @@
 package com.cyberapple.followme.configuration;
 
-import com.cyberapple.followme.filters.JwtAuthenticationFilter;
+import com.cyberapple.followme.security.filters.JwtAuthenticationFilter;
 import com.cyberapple.followme.repositories.UserRepository;
 import com.cyberapple.followme.services.CustomUserDetailsService;
-import com.cyberapple.followme.services.TokenBlackListService;
+import com.cyberapple.followme.security.TokenBlackListService;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
