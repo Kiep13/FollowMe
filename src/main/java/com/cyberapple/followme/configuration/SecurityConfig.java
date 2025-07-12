@@ -48,10 +48,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 
+    // Automatically caught by spring security
     @Bean
     ApplicationListener<AuthenticationSuccessEvent> successListener() {
         return event -> {
-            System.out.println("Authentication successful for user: " + event.getAuthentication().getName());
+            System.out.println("🎉Authentication successful for user: " + event.getAuthentication().getName());
         };
     }
 
@@ -61,9 +62,6 @@ public class SecurityConfig {
             DatabaseAuthenticationProvider databaseAuthenticationProvider,
             AuthenticationEventPublisher authenticationEventPublisher
     ) throws Exception {
-//        var authenticationManager = new ProviderManager(databaseAuthenticationProvider);
-//        authenticationManager.setAuthenticationEventPublisher(authenticationEventPublisher);
-
         var jwtSecurityConfigurer = new JwtSecurityConfigurer(databaseAuthenticationProvider);
 
         http
