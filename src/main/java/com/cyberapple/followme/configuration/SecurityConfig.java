@@ -71,12 +71,14 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(authorize -> authorize
                 // Web MVC pages
-                .requestMatchers("/excursions", "/excursions/*", "/login").permitAll() 
+                .requestMatchers("/excursions", "/excursions/*", "/login", "/h2-console/**").permitAll()
                 // Rest API endpoints
                 .requestMatchers("/api/**", "/login").permitAll() 
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated() 
             )
+                // For access h2 console normally (because it displays inframe)
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
             .with(jwtSecurityConfigurer, Customizer.withDefaults())
             .logout(logout -> logout
                 .logoutUrl("/logout")

@@ -57,6 +57,15 @@ Future functionality
   - Statistics (see which excursions more popular)
   - Send notifications (by emails)
 
+## Database
+
+This project uses H2 in-memory database.
+
+To access the H2 console, you can use the following URL:
+```sh
+http://localhost:8080/h2-console
+```
+
 ## Actuator
 
 Available edn point (secured by ADMIN role)
