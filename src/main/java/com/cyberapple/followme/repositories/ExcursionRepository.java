@@ -2,6 +2,8 @@ package com.cyberapple.followme.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,23 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
     """)
     Optional<ExcursionDto> findExcursionWithAvailablePlacesById(String id);
+
+    @Query("""
+        SELECT new com.cyberapple.followme.dtos.ExcursionDto(
+            e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces, COUNT(pp.id), e.country
+        )
+        FROM Excursion e
+        LEFT JOIN e.participations p
+        LEFT JOIN p.participants pp
+        WHERE (:minPrice IS NULL OR e.price >= :minPrice)
+          AND (:maxPrice IS NULL OR e.price <= :maxPrice)
+          AND (:countries IS NULL OR e.country IN :countries)
+          AND (:startDate IS NULL OR e.date >= :startDate)
+          AND (:endDate IS NULL OR e.date <= :endDate)
+        GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
+       HAVING (:hasAvailableSeats = false OR (e.amountOfPlaces - COUNT(pp.id)) > 0)
+    """)
+    List<ExcursionDto> searchExcursions(Integer minPrice, Integer maxPrice, List<String> countries, LocalDate startDate, LocalDate endDate, boolean hasAvailableSeats);
 
     @Query("SELECT DISTINCT e.country FROM Excursion e")
     List<String> getCountryList();

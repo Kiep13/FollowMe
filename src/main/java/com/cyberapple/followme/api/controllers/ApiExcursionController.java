@@ -1,5 +1,6 @@
 package com.cyberapple.followme.api.controllers;
 
+import com.cyberapple.followme.models.ExcursionSearch;
 import com.cyberapple.followme.services.ExcursionReportService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import io.micrometer.core.annotation.Counted;
 import com.cyberapple.followme.exceptions.NotFoundException;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("api/excursions")
@@ -33,6 +35,28 @@ public class ApiExcursionController {
     @Counted(value = "api.calls.excursions", description = "Number of calls to /api/excursions")
     public Iterable<ExcursionDto> getAllExcursions() {
         return excursionService.getAllExcursions();
+    }
+
+    @GetMapping("/search")
+    @Counted(value = "api.calls.excursions", description = "Number of calls to /api/excursions")
+    public Iterable<ExcursionDto> searchExcursions(
+            @RequestParam("minPrice") int minPrice,
+            @RequestParam("maxPrice") int maxPrice,
+            @RequestParam("countries") String[] countries,
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam(value = "hasAvailableSeats", required = false, defaultValue = "false") boolean hasAvailableSeats
+    ) {
+        ExcursionSearch excursionSearch = ExcursionSearch.builder()
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .countries(countries)
+                .startDate(startDate)
+                .endDate(endDate)
+                .hasAvailableSeats(hasAvailableSeats)
+                .build();
+
+        return excursionService.searchExcursions(excursionSearch);
     }
 
     @GetMapping("/price-range")

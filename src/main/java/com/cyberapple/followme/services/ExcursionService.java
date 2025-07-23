@@ -6,6 +6,7 @@ import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.entities.Excursion;
 import com.cyberapple.followme.entities.Participant;
 import com.cyberapple.followme.entities.Participation;
+import com.cyberapple.followme.models.ExcursionSearch;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.cyberapple.followme.repositories.ExcursionRepository;
 import com.cyberapple.followme.repositories.ParticipationRepository;
@@ -29,6 +30,17 @@ public class ExcursionService {
 
     public Iterable<ExcursionDto> getAllExcursions() {
         return this.excursionRepository.findAllExcursionsWithAvailablePlaces();
+    }
+
+    public Iterable<ExcursionDto> searchExcursions(ExcursionSearch excursionSearch) {
+        return this.excursionRepository.searchExcursions(
+                excursionSearch.getMinPrice(),
+                excursionSearch.getMaxPrice(),
+                List.of(excursionSearch.getCountries()),
+                excursionSearch.getStartDate(),
+                excursionSearch.getEndDate(),
+                excursionSearch.isHasAvailableSeats()
+        );
     }
 
     public PriceRange getPriceRange() {
