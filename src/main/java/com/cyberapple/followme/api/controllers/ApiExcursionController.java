@@ -1,5 +1,7 @@
 package com.cyberapple.followme.api.controllers;
 
+import com.cyberapple.followme.services.ExcursionReportService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -16,12 +18,16 @@ import io.micrometer.core.annotation.Counted;
 
 import com.cyberapple.followme.exceptions.NotFoundException;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("api/excursions")
 @AllArgsConstructor
 public class ApiExcursionController {
 
     private final ExcursionService excursionService;
+
+    private final ExcursionReportService excursionReportService;
 
     @GetMapping("")
     @Counted(value = "api.calls.excursions", description = "Number of calls to /api/excursions")
@@ -49,5 +55,11 @@ public class ApiExcursionController {
     @PreAuthorize("hasRole('ADMIN')")
     public ExcursionParticipantsDto getExcursionParticipants(@PathVariable String id) throws NotFoundException {
         return excursionService.getExcursionParticipants(id);
-    }     
+    }
+
+    @GetMapping("/{id}/participants/report")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void getExcursionParticipants(@PathVariable String id, HttpServletResponse response) throws NotFoundException, IOException {
+        excursionReportService.generateParticipantReport(id, response);
+    }
 }
