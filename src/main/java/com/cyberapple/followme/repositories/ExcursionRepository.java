@@ -1,7 +1,9 @@
 package com.cyberapple.followme.repositories;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
@@ -61,4 +63,9 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
 
     @Query("SELECT new com.cyberapple.followme.dtos.PriceRange(MIN(e.price), MAX(e.price)) FROM Excursion e")
     PriceRange getPriceRange();
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Excursion e SET e.amountOfPlaces = :amountOfPlaces WHERE e.id = :id")
+    void updateExcursionPlaces(String id, int amountOfPlaces);
 }

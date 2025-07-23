@@ -59,8 +59,7 @@ public class SecurityConfig {
     @Bean 
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
-            DatabaseAuthenticationProvider databaseAuthenticationProvider,
-            AuthenticationEventPublisher authenticationEventPublisher
+            DatabaseAuthenticationProvider databaseAuthenticationProvider
     ) throws Exception {
         var jwtSecurityConfigurer = new JwtSecurityConfigurer(databaseAuthenticationProvider);
 

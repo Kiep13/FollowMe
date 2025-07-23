@@ -1,6 +1,7 @@
 package com.cyberapple.followme.api.controllers;
 
 import com.cyberapple.followme.models.ExcursionSearch;
+import com.cyberapple.followme.records.UpdateExcursionPlaces;
 import com.cyberapple.followme.services.ExcursionReportService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -91,5 +92,11 @@ public class ApiExcursionController {
     @PreAuthorize("hasRole('ADMIN')")
     public void getExcursionParticipants(@PathVariable String id, HttpServletResponse response) throws NotFoundException, IOException {
         excursionReportService.generateParticipantReport(id, response);
+    }
+
+    @PostMapping("/{id}/manage/places")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void updateExcursionPlaces(@PathVariable String id, @RequestBody UpdateExcursionPlaces update) throws NotFoundException, IOException {
+        excursionService.updateExcursionPlaces(id, update.amountOfPlaces());
     }
 }

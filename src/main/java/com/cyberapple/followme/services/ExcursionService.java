@@ -76,4 +76,10 @@ public class ExcursionService {
 
         return new ExcursionParticipantsDto(excursion, participants);
     }
+
+    public void updateExcursionPlaces(String id, int amountOfPlaces) throws NotFoundException {
+        excursionIdValidator.validateExcursionId(id);
+
+        excursionRepository.updateExcursionPlaces(id, amountOfPlaces);
+    }
 }
