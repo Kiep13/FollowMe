@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,14 +33,15 @@ public class ExcursionService {
         return this.excursionRepository.findAllExcursionsWithAvailablePlaces();
     }
 
-    public Iterable<ExcursionDto> searchExcursions(ExcursionSearch excursionSearch) {
+    public Iterable<ExcursionDto> searchExcursions(ExcursionSearch excursionSearch, Pageable pageable) {
         return this.excursionRepository.searchExcursions(
                 excursionSearch.getMinPrice(),
                 excursionSearch.getMaxPrice(),
                 List.of(excursionSearch.getCountries()),
                 excursionSearch.getStartDate(),
                 excursionSearch.getEndDate(),
-                excursionSearch.isHasAvailableSeats()
+                excursionSearch.isHasAvailableSeats(),
+                pageable
         );
     }
 

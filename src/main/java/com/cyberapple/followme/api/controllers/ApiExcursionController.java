@@ -5,6 +5,8 @@ import com.cyberapple.followme.services.ExcursionReportService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +47,9 @@ public class ApiExcursionController {
             @RequestParam("countries") String[] countries,
             @RequestParam("startDate") LocalDate startDate,
             @RequestParam("endDate") LocalDate endDate,
-            @RequestParam(value = "hasAvailableSeats", required = false, defaultValue = "false") boolean hasAvailableSeats
+            @RequestParam(value = "hasAvailableSeats", required = false, defaultValue = "false") boolean hasAvailableSeats,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize
     ) {
         ExcursionSearch excursionSearch = ExcursionSearch.builder()
                 .minPrice(minPrice)
@@ -56,7 +60,9 @@ public class ApiExcursionController {
                 .hasAvailableSeats(hasAvailableSeats)
                 .build();
 
-        return excursionService.searchExcursions(excursionSearch);
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return excursionService.searchExcursions(excursionSearch, pageable);
     }
 
     @GetMapping("/price-range")

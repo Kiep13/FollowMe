@@ -1,5 +1,6 @@
 package com.cyberapple.followme.repositories;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -53,7 +54,7 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
        HAVING (:hasAvailableSeats = false OR (e.amountOfPlaces - COUNT(pp.id)) > 0)
     """)
-    List<ExcursionDto> searchExcursions(Integer minPrice, Integer maxPrice, List<String> countries, LocalDate startDate, LocalDate endDate, boolean hasAvailableSeats);
+    List<ExcursionDto> searchExcursions(Integer minPrice, Integer maxPrice, List<String> countries, LocalDate startDate, LocalDate endDate, boolean hasAvailableSeats, Pageable pageable);
 
     @Query("SELECT DISTINCT e.country FROM Excursion e")
     List<String> getCountryList();
