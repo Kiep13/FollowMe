@@ -50,6 +50,7 @@ public class ApiExcursionController {
             @RequestParam("startDate") LocalDate startDate,
             @RequestParam("endDate") LocalDate endDate,
             @RequestParam(value = "hasAvailableSeats", required = false, defaultValue = "false") boolean hasAvailableSeats,
+            @RequestParam(value = "isActive", required = false, defaultValue = "false") boolean isActive,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize
     ) {
@@ -60,6 +61,7 @@ public class ApiExcursionController {
                 .startDate(startDate)
                 .endDate(endDate)
                 .hasAvailableSeats(hasAvailableSeats)
+                .isActive(isActive)
                 .build();
 
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("date").ascending());
@@ -97,7 +99,7 @@ public class ApiExcursionController {
 
     @PostMapping("/{id}/manage/places")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateExcursionPlaces(@PathVariable String id, @RequestBody UpdateExcursionPlaces update) throws NotFoundException, IOException {
+    public void updateExcursionPlaces(@PathVariable String id, @RequestBody UpdateExcursionPlaces update) throws NotFoundException {
         excursionService.updateExcursionPlaces(id, update.amountOfPlaces());
     }
 }

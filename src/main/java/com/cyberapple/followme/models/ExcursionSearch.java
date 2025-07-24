@@ -18,4 +18,5 @@ public class ExcursionSearch {
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean hasAvailableSeats;
+    private boolean isActive;
 }

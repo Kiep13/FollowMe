@@ -53,10 +53,11 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
           AND (:countries IS NULL OR e.country IN :countries)
           AND (:startDate IS NULL OR e.date >= :startDate)
           AND (:endDate IS NULL OR e.date <= :endDate)
+          AND (:isActive IS NULL OR :isActive IS false OR e.date >= CURRENT_DATE)
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
        HAVING (:hasAvailableSeats = false OR (e.amountOfPlaces - COUNT(pp.id)) > 0)
     """)
-    List<ExcursionDto> searchExcursions(Integer minPrice, Integer maxPrice, List<String> countries, LocalDate startDate, LocalDate endDate, boolean hasAvailableSeats, Pageable pageable);
+    List<ExcursionDto> searchExcursions(Integer minPrice, Integer maxPrice, List<String> countries, LocalDate startDate, LocalDate endDate, boolean hasAvailableSeats, boolean isActive, Pageable pageable);
 
     @Query("SELECT DISTINCT e.country FROM Excursion e")
     List<String> getCountryList();

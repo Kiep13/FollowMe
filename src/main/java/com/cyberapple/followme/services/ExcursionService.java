@@ -41,6 +41,7 @@ public class ExcursionService {
                 excursionSearch.getStartDate(),
                 excursionSearch.getEndDate(),
                 excursionSearch.isHasAvailableSeats(),
+                excursionSearch.isActive(),
                 pageable
         );
     }
