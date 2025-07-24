@@ -6,7 +6,7 @@ import java.util.List;
 import com.cyberapple.followme.records.ExcursionInput;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Excursion {
 
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     private String id;

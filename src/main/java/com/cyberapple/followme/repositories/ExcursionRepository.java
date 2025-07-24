@@ -65,7 +65,7 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
     @Query("SELECT new com.cyberapple.followme.dtos.PriceRange(MIN(e.price), MAX(e.price)) FROM Excursion e")
     PriceRange getPriceRange();
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Transactional
     @Query("UPDATE Excursion e SET e.amountOfPlaces = :amountOfPlaces WHERE e.id = :id")
     void updateExcursionPlaces(String id, int amountOfPlaces);
