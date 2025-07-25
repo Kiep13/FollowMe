@@ -1,64 +1,8 @@
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    role VARCHAR(20) NOT NULL DEFAULT 'USER',
-    password VARCHAR(255) NOT NULL
-);
-
 -- Hashed password actual value 1234 with bcrypt cosr factor 10
 INSERT INTO users (id, first_name, last_name, email, password, role) VALUES
 ('8db44b94-b254-42bb-9867-3756be46c450', 'John', 'Doe', 'admin@gmail.com', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36', 'ADMIN'),
 ('c7b3f611-4ff2-4456-b545-4834e1accda6', 'Georgia', 'Blackwell', 'user@gmail.com', '$2a$10$Vjzdo/JS5s/4Cy8.ZU7yB.eUh1nrXp7w6lEVvILJy3zjfQgr0wS36', 'USER');
 
-CREATE TYPE country_enum AS ENUM (
-    -- Europe
-    'sk', 'hr', 'cz', 'at', 'hu', 'de', 'it', 'pl', 'si', 'fr', 
-    'es', 'gr', 'uk', 'nl', 'be', 'ch', 'pt', 'se', 'no', 'fi', 
-    'dk', 'ie', 'ru', 'ua', 'bg', 'ro', 'rs', 'tr', 'cy', 'mt', 
-    'is', 'lu', 'ee', 'lv', 'lt', 'by', 'al', 'me', 'mk', 'xk', 
-    'md', 'ad', 'li', 'va', 'sm', 'mc', 'gb',
-    
-    -- Asia
-    'af', 'am', 'az', 'bh', 'bd', 'bt', 'bn', 'kh', 'cn', 'ge', 
-    'in', 'id', 'ir', 'iq', 'il', 'jp', 'jo', 'kz', 'kw', 'kg', 
-    'la', 'lb', 'my', 'mv', 'mn', 'mm', 'np', 'kp', 'om', 'pk', 
-    'ph', 'qa', 'sa', 'sg', 'kr', 'lk', 'sy', 'tw', 'tj', 'th', 
-    'tl', 'tm', 'ae', 'uz', 'vn', 'ye',
-    
-    -- Africa
-    'dz', 'ao', 'bj', 'bw', 'bf', 'bi', 'cv', 'cm', 'cf', 'td', 
-    'km', 'cd', 'cg', 'ci', 'dj', 'eg', 'gq', 'er', 'sz', 'et', 
-    'ga', 'gm', 'gh', 'gn', 'gw', 'ke', 'ls', 'lr', 'ly', 'mg', 
-    'mw', 'ml', 'mr', 'mu', 'ma', 'mz', 'na', 'ne', 'ng', 'rw', 
-    'st', 'sn', 'sc', 'sl', 'so', 'za', 'ss', 'sd', 'tz', 'tg', 
-    'tn', 'ug', 'zm', 'zw',
-    
-    -- Americas
-    'ag', 'ar', 'aw', 'bs', 'bb', 'bz', 'bm', 'bo', 'br', 'ca', 
-    'ky', 'cl', 'co', 'cr', 'cu', 'cw', 'dm', 'do', 'ec', 'sv', 
-    'fk', 'gd', 'gp', 'gt', 'gy', 'ht', 'hn', 'jm', 'mq', 'mx', 
-    'ms', 'ni', 'pa', 'py', 'pe', 'pr', 'bl', 'kn', 'lc', 'mf', 
-    'pm', 'vc', 'sx', 'sr', 'tt', 'tc', 'us', 'uy', 've', 'vg', 
-    'vi',
-    
-    -- Oceania
-    'as', 'au', 'ck', 'fj', 'pf', 'gu', 'ki', 'mh', 'fm', 'nr', 
-    'nc', 'nz', 'nu', 'mp', 'pw', 'pg', 'ws', 'sb', 'tk', 'to', 
-    'tv', 'vu', 'wf'
-);
-
-CREATE TABLE IF NOT EXISTS excursion (
-    id UUID PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    date DATE NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    amount_of_places INT NOT NULL,
-    country country_enum NOT NULL
-);
 
 INSERT INTO excursion (id, title, image_url, description, date, price, amount_of_places, country) VALUES
 ('367fe10c-34ef-4a95-8671-d2456a965416', 'High Tatras Hike', 'https://breaking-the-borders.com/wp-content/uploads/2023/10/tatras-slovakia-hikes-beginners.webp', 'Spend a day hiking scenic trails, spotting waterfalls, and enjoying panoramic views from alpine peaks in the High Tatras.', '2025-06-05', 50, 20, 'sk'),
@@ -72,24 +16,3 @@ INSERT INTO excursion (id, title, image_url, description, date, price, amount_of
 ('3e33ffdf-cdea-4ec7-a9dd-55de56a4f080', 'Danube River Kayak Tour', 'https://media.tacdn.com/media/attractions-splice-spp-674x446/10/6f/35/30.jpg', 'Enjoy a scenic kayak trip along the Danube River, passing castles, cliffs, and nature reserves on a fun outdoor adventure.', '2025-07-01', 85, 15, 'sk'),
 ('c98b7db5-6125-41a0-8d27-11b197f9ff58', 'Caving Adventure in Aggtelek National Park', 'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/70/57/90.jpg', 'Explore the mystical Baradla Cave system, discovering stunning underground formations and fascinating local legends.', '2025-07-03', 95, 8, 'hu');
 
--- Table creation for Participation
-CREATE TABLE IF NOT EXISTS participation (
-    id UUID PRIMARY KEY,
-    excursion_id UUID NOT NULL,
-    user_id UUID NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (excursion_id) REFERENCES excursion (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
-
--- Table creation for Participant
-CREATE TABLE IF NOT EXISTS participant (
-    id UUID PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    citizenship country_enum NOT NULL,
-    passport_number VARCHAR(50) NOT NULL,
-    participation_id UUID NOT NULL,
-    FOREIGN KEY (participation_id) REFERENCES participation (id)
-);

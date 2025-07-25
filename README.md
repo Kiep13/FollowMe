@@ -57,9 +57,24 @@ Future functionality
   - Statistics (see which excursions more popular)
   - Send notifications (by emails)
 
+## Docker
+
+Infastracture for this app can be built with docker-compose, which is located in `docker` folder and `docker-compose.yml` file.
+
+To apply it, run the following command in the `docker` folder of the project:
+```bash
+docker-compose up -d
+```
+
+It contains:
+- Postgres database container
+- Connected pgAdmin container for managing the database (access via http://localhost:5050)
+
 ## Database
 
-This project uses H2 in-memory database.
+This project uses PostgreSQL as the main database. It configured via Docker container (see section above).
+
+You can also set up project for using H2 in-memory database. To do this, you need to change the `application.properties` file in the `src/main/resources` directory - remove `posrgres` as active database and put h2 instead. 
 
 To access the H2 console, you can use the following URL:
 ```sh

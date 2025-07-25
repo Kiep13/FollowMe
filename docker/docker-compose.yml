@@ -1,0 +1,27 @@
+version: "3.9"
+name: followme
+services:
+  fm-postgres:
+    image: postgres:15
+    container_name: fm-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: followme
+    networks:
+      default-network:
+  fm-pgadmin:
+    image: "dpage/pgadmin4:7.0"
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    networks:
+      default-network:
+
+networks:
+  default-network:
+    name: default-network
