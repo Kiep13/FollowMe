@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cyberapple.followme.entities.Participant;
@@ -29,7 +30,7 @@ public class BookingService {
     private final ExcursionValidator excursionIdValidator;
     private final BookingValidator bookingValidator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void registerForExcursion(String excursionId, BookingInput bookingInput) throws NotFoundException {
         excursionIdValidator.validateExcursionId(excursionId);
 
@@ -61,6 +62,18 @@ public class BookingService {
         Iterable<Participation> participations = this.participationRepository.findByUser(user);
 
         return participations;
+    }
+
+    public void cancelExcursion(String bookingId) throws NotFoundException {
+        Participation participation = participationRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Participation not found"));
+
+        User user = authenticationService.getAuthenticatedUser();
+        if (!participation.getUser().getId().equals(user.getId())) {
+            throw new NotFoundException("Participation not found for the authenticated user");
+        }
+
+        participationRepository.delete(participation);
     }
 
     private int getAmountOfParticipants(Iterable<ParticipantInput> participants) {

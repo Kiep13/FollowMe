@@ -1,7 +1,10 @@
 package com.cyberapple.followme.api.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,5 +37,12 @@ public class ApiBookingController {
     @Counted(value = "api.calls.booking", description = "Number of calls to /api/{excursionId}/add")
     public void registerForExcursion(@PathVariable String id, @Valid @RequestBody BookingInput bookingInput) {
         bookingService.registerForExcursion(id, bookingInput);
+    }
+
+    @DeleteMapping("/{bookingId}/cancel")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelExcursion(@PathVariable String bookingId) {
+        bookingService.cancelExcursion(bookingId);
     }
 }
