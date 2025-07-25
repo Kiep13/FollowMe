@@ -64,7 +64,8 @@ public class BookingService {
         return participations;
     }
 
-    public void cancelExcursion(String bookingId) throws NotFoundException {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public void cancelBooking(String bookingId) throws NotFoundException {
         Participation participation = participationRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Participation not found"));
 

@@ -43,6 +43,6 @@ public class ApiBookingController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelExcursion(@PathVariable String bookingId) {
-        bookingService.cancelExcursion(bookingId);
+        bookingService.cancelBooking(bookingId);
     }
 }
