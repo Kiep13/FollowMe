@@ -71,6 +71,81 @@
 					"response": []
 				},
 				{
+					"name": "Filter Excursions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/search?countries=si&countries=sk&countries=hu&minPrice=5&maxPrice=150&startDate=2025-01-01&endDate=2025-12-29&hasAvailableSeats=true&page=0&pageSize=5&isActive=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "countries",
+									"value": "si"
+								},
+								{
+									"key": "countries",
+									"value": "sk"
+								},
+								{
+									"key": "countries",
+									"value": "hu"
+								},
+								{
+									"key": "minPrice",
+									"value": "5"
+								},
+								{
+									"key": "maxPrice",
+									"value": "150"
+								},
+								{
+									"key": "startDate",
+									"value": "2025-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-12-29"
+								},
+								{
+									"key": "hasAvailableSeats",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "isActive",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Excursion By Id",
 					"request": {
 						"method": "GET",
@@ -189,7 +264,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"password\": \"1234\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/excursions/{{excursionId}}/participants",
@@ -201,6 +276,76 @@
 								"excursions",
 								"{{excursionId}}",
 								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Admin] Get excursion participants Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/{{excursionId}}/participants/report",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"{{excursionId}}",
+								"participants",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[Admin] Update amount places in excursion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amountOfPlaces\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/excursions/{{excursionId}}/manage/places",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"excursions",
+								"{{excursionId}}",
+								"manage",
+								"places"
 							]
 						}
 					},
@@ -387,6 +532,32 @@
 								"api",
 								"bookings",
 								"my"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"{{bookingId}}",
+								"cancel"
 							]
 						}
 					},
@@ -588,6 +759,11 @@
 		{
 			"key": "excursionId",
 			"value": "26d14709-ccc4-4eaf-a8a8-704e7e24958b",
+			"type": "string"
+		},
+		{
+			"key": "bookingId",
+			"value": "test",
 			"type": "string"
 		}
 	]
