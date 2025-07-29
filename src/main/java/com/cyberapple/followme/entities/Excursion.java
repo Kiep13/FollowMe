@@ -2,6 +2,7 @@ package com.cyberapple.followme.entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import com.cyberapple.followme.records.ExcursionInput;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,7 +22,7 @@ public class Excursion {
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     private String title;
 

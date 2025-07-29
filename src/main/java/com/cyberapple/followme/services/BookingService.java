@@ -2,6 +2,7 @@ package com.cyberapple.followme.services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -34,13 +35,13 @@ public class BookingService {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void registerForExcursion(String excursionId, BookingInput bookingInput) throws NotFoundException {
-        excursionIdValidator.validateExcursionId(excursionId);
+        var uuidExcursionId = excursionIdValidator.validateExcursionId(excursionId);
 
         int amountOfParticipants = getAmountOfParticipants(bookingInput.participants());
-        bookingValidator.validateFreeSears(excursionId, amountOfParticipants);
+        bookingValidator.validateFreeSears(uuidExcursionId, amountOfParticipants);
 
         Participation participation = new Participation();
-        participation.setExcursion(this.excursionRepository.findById(excursionId).orElse(null));
+        participation.setExcursion(this.excursionRepository.findById(uuidExcursionId).orElse(null));
 
         User user = authenticationService.getAuthenticatedUser();
         
@@ -71,7 +72,8 @@ public class BookingService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void cancelBooking(String bookingId) throws NotFoundException {
-        Participation participation = participationRepository.findById(bookingId)
+        var uuidBookingId = UUID.fromString(bookingId);
+        Participation participation = participationRepository.findById(uuidBookingId)
                 .orElseThrow(() -> new NotFoundException("Participation not found"));
 
         User user = authenticationService.getAuthenticatedUser();

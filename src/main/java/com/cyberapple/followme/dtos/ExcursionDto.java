@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import com.cyberapple.followme.entities.Country;
 
@@ -12,7 +13,7 @@ import com.cyberapple.followme.entities.Country;
 @Setter
 @NoArgsConstructor
 public class ExcursionDto {
-    private String id;
+    private UUID id;
 
     private String title;
 
@@ -30,7 +31,7 @@ public class ExcursionDto {
 
     private Country country;
 
-    public ExcursionDto(String id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants, Country country) {
+    public ExcursionDto(UUID id, String title, String imageUrl, String description, LocalDate date, Integer price, Integer amountOfPlaces, Long amountOfParticipants, Country country) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;

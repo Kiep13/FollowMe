@@ -9,12 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.cyberapple.followme.dtos.PriceRange;
 import com.cyberapple.followme.dtos.ExcursionDto;
 import com.cyberapple.followme.entities.Excursion;
 
-public interface ExcursionRepository extends JpaRepository<Excursion, String> {
+public interface ExcursionRepository extends JpaRepository<Excursion, UUID> {
 
     Excursion findByTitle(String string);
 
@@ -39,7 +40,7 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
         WHERE e.id = :id
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
     """)
-    Optional<ExcursionDto> findExcursionWithAvailablePlacesById(String id);
+    Optional<ExcursionDto> findExcursionWithAvailablePlacesById(UUID id);
 
     @Query("""
         SELECT new com.cyberapple.followme.dtos.ExcursionDto(
@@ -68,5 +69,5 @@ public interface ExcursionRepository extends JpaRepository<Excursion, String> {
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("UPDATE Excursion e SET e.amountOfPlaces = :amountOfPlaces WHERE e.id = :id")
-    void updateExcursionPlaces(String id, int amountOfPlaces);
+    void updateExcursionPlaces(UUID id, int amountOfPlaces);
 }

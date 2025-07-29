@@ -7,12 +7,14 @@ import com.cyberapple.followme.repositories.ExcursionRepository;
 
 import lombok.AllArgsConstructor;
 
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class BookingValidator {
     private final ExcursionRepository excursionRepository;
 
-    public void validateFreeSears(String excursionId, Integer amountOfParticipants) throws IllegalArgumentException {
+    public void validateFreeSears(UUID excursionId, Integer amountOfParticipants) throws IllegalArgumentException {
         ExcursionDto excursion = excursionRepository.findExcursionWithAvailablePlacesById(excursionId).orElse(null);
 
         if (excursion.getAvailablePlaces() < amountOfParticipants) {

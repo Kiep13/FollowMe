@@ -51,9 +51,9 @@ public class ExcursionService {
     }
 
     public ExcursionDto getExcursionById(String id) throws NotFoundException {
-        excursionIdValidator.validateExcursionId(id);
+        var uuidExcursionId = excursionIdValidator.validateExcursionId(id);
 
-        return this.excursionRepository.findExcursionWithAvailablePlacesById(id)
+        return this.excursionRepository.findExcursionWithAvailablePlacesById(uuidExcursionId)
                 .orElseThrow(() -> new NotFoundException("Excursion not found with id: " + id));
     }
 
@@ -63,9 +63,9 @@ public class ExcursionService {
     }
 
     public ExcursionParticipantsDto getExcursionParticipants(String id) throws NotFoundException {
-        excursionIdValidator.validateExcursionId(id);
+        var uuidExcursionId = excursionIdValidator.validateExcursionId(id);
 
-        ExcursionDto excursion = this.excursionRepository.findExcursionWithAvailablePlacesById(id)
+        ExcursionDto excursion = this.excursionRepository.findExcursionWithAvailablePlacesById(uuidExcursionId)
                 .orElseThrow(() -> new NotFoundException("Excursion not found with id: " + id));
 
         Iterable<Participation> participations = this.participationRepository.findByExcursionId(excursion.getId());
@@ -79,8 +79,8 @@ public class ExcursionService {
     }
 
     public void updateExcursionPlaces(String id, int amountOfPlaces) throws NotFoundException {
-        excursionIdValidator.validateExcursionId(id);
+        var uuidExcursionId = excursionIdValidator.validateExcursionId(id);
 
-        excursionRepository.updateExcursionPlaces(id, amountOfPlaces);
+        excursionRepository.updateExcursionPlaces(uuidExcursionId, amountOfPlaces);
     }
 }
