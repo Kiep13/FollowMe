@@ -27,6 +27,8 @@ public class BookingService {
     private final ParticipationRepository participationRepository;
     private final AuthenticationService authenticationService;
 
+    private final InvoiceService invoiceService;
+
     private final ExcursionValidator excursionIdValidator;
     private final BookingValidator bookingValidator;
 
@@ -54,14 +56,17 @@ public class BookingService {
         participation.setCreatedAt(LocalDate.now());
 
         participationRepository.save(participation);
+
+        var excursion = participation.getExcursion();
+        var invoiceAmount = excursion.getPrice() * amountOfParticipants;
+        var description = String.format("Booking for excursion '%s' with %d participants", excursion.getTitle(), amountOfParticipants);
+        invoiceService.performInvoiceRequest(invoiceAmount, description);
     }
 
     public Iterable<Participation> getBookedExcursions() {
         User user = authenticationService.getAuthenticatedUser();
 
-        Iterable<Participation> participations = this.participationRepository.findByUser(user);
-
-        return participations;
+        return this.participationRepository.findByUser(user);
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
