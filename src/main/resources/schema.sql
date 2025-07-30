@@ -44,6 +44,9 @@ CREATE TYPE country_enum AS ENUM (
     'tv', 'vu', 'wf'
 );
 
+CREATE CAST (character varying AS country_enum) WITH INOUT AS IMPLICIT;
+CREATE CAST (character varying[] AS country_enum[]) WITH INOUT AS IMPLICIT;
+
 CREATE TABLE IF NOT EXISTS excursion (
     id UUID PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
@@ -54,7 +57,6 @@ CREATE TABLE IF NOT EXISTS excursion (
     amount_of_places INT NOT NULL,
     country country_enum NOT NULL
 );
-
 
 -- Table creation for Participation
 CREATE TABLE IF NOT EXISTS participation (
