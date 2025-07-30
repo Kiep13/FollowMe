@@ -41,6 +41,7 @@ public class ApiExcursionController {
         return excursionService.getAllExcursions();
     }
 
+    // Doesn't work, because JPQL doesn't support array enum paramters - type mistchmatch, it converts enum value to String automatically
     @GetMapping("/search")
     @Counted(value = "api.calls.excursions", description = "Number of calls to /api/excursions")
     public Iterable<ExcursionDto> searchExcursions(

@@ -71,7 +71,7 @@
 					"response": []
 				},
 				{
-					"name": "Filter Excursions",
+					"name": "[DON'T WORK ]Filter Excursions",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -227,7 +227,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"Northern Lights Aurora\",\n  \"imageUrl\": \"https://cdn.mos.cms.futurecdn.net/v2/t:0,l:0,cw:2120,ch:1193,q:80,w:2120/57jQMDN5MZLYfV8ps8HuZQ.jpg\",\n  \"description\": \"Join our immersive evening workshop in Iceland, where you'll learn to capture the mesmerizing beauty of the Aurora Borealis under the guidance of professional photographers. Includes transport, equipment rental, and hot drinks.\",\n  \"date\": \"2025-12-15\",\n  \"price\": 250,\n  \"amountOfPlaces\": 15,\n  \"country\": \"Iceland\"\n}\n",
+							"raw": "{\n  \"title\": \"Northern Lights Aurora\",\n  \"imageUrl\": \"https://cdn.mos.cms.futurecdn.net/v2/t:0,l:0,cw:2120,ch:1193,q:80,w:2120/57jQMDN5MZLYfV8ps8HuZQ.jpg\",\n  \"description\": \"Join our immersive evening workshop in Iceland, where you'll learn to capture the mesmerizing beauty of the Aurora Borealis under the guidance of professional photographers. Includes transport, equipment rental, and hot drinks.\",\n  \"date\": \"2025-12-15\",\n  \"price\": 250,\n  \"amountOfPlaces\": 15,\n  \"country\": \"is\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -328,7 +328,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"amountOfPlaces\": 2\n}",
+							"raw": "{\n    \"amountOfPlaces\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -538,7 +538,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Cancel booking",
 					"request": {
 						"method": "DELETE",
 						"header": [
