@@ -51,9 +51,9 @@ public interface ExcursionRepository extends JpaRepository<Excursion, UUID> {
         LEFT JOIN p.participants pp
         WHERE (:minPrice IS NULL OR e.price >= :minPrice)
           AND (:maxPrice IS NULL OR e.price <= :maxPrice)
-          AND (:countries IS NULL OR e.country IN :countries)
-          AND (:startDate IS NULL OR e.date >= :startDate)
-          AND (:endDate IS NULL OR e.date <= :endDate)
+          AND (:countries IS NULL OR CAST(e.country as string) IN :countries)
+          AND (CAST(:startDate as date) IS NULL OR e.date >= CAST(:startDate as date))
+          AND (CAST(:endDate as date) IS NULL OR e.date <= CAST(:endDate as date))
           AND (:isActive IS NULL OR :isActive IS false OR e.date >= CURRENT_DATE)
         GROUP BY e.id, e.title, e.imageUrl, e.description, e.date, e.price, e.amountOfPlaces
        HAVING (:hasAvailableSeats = false OR (e.amountOfPlaces - COUNT(pp.id)) > 0)

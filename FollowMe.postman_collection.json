@@ -71,7 +71,7 @@
 					"response": []
 				},
 				{
-					"name": "[DON'T WORK ]Filter Excursions",
+					"name": "Filter Excursions",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
